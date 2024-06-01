@@ -15,7 +15,7 @@ non.
 
 5-Installer Bun et les dépendances du projet via la commande `bun install`
 
-6-Constuire l'application via la commande `bun build`
+6-Constuire l'application via la commande `bun run build`
 
 7-Publier l'application
 
