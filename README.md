@@ -36,7 +36,7 @@ Sinon, télécharger le projet via Github ou en ligne de commande: `git clone ht
 
 Pour lancer le projet en ligne, cliquez sur le lien suivannt: https://recipes-app.webapps24.eu
 
-Pour lancer le projet en local, lancer la commande `bun run start`
+Pour lancer le projet en local, lancer la commande `bun run dev`
 
 ## Fabriqué avec
 

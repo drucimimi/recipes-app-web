@@ -1,0 +1,6 @@
+.footer{
+    @apply absolute bottom-0 w-full flex flex-col gap-2 items-center bg-green-500 p-2;
+}
+.contentinfo{
+    @apply flex flex-col lg:flex-row gap-2
+}

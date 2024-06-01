@@ -1,0 +1,15 @@
+.buttonLink{
+    @apply flex p-2 gap-2 cursor-pointer;
+}
+.red{
+    @apply text-red-500;
+}
+.blue{
+    @apply text-blue-500;
+}
+.green{
+    @apply text-green-500;
+}
+.white{
+    @apply text-black dark:text-white;
+}
