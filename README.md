@@ -1,5 +1,5 @@
 # Recipes App
-Cette application web permet de découvrir des recettes entre particuliers. Vous pouvez également en tant qu'utilisateur 
+Cette application mobile permet de découvrir des recettes entre particuliers. Vous pouvez également en tant qu'utilisateur 
 connecté : créer, modifier, supprimer et télécharger des recettes pour les autres utilisateurs connectés ou 
 non.
 
