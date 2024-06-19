@@ -1,7 +1,5 @@
 # Recipes App
-Cette application mobile permet de découvrir des recettes entre particuliers. Vous pouvez également en tant qu'utilisateur 
-connecté : créer, modifier, supprimer et télécharger des recettes pour les autres utilisateurs connectés ou 
-non.
+Ce site vitrine permet de télécharger l'application de recettes sur Android et iOS.
 
 ## Pour commencer
 
