@@ -19,7 +19,6 @@ const Home = () => {
         </p>
         <div className="flex flex-col lg:flex-row gap-2">
           <ButtonLink source='/download/apk/recipes-app-2024.1.2.apk' name="Télécharger l'application Android" action='Télécharger' icon={iconAPK} iconReverse={iconAPKReverse} iconDescription='Icone Android' /> 
-          {/* <ButtonLink source='' name='Télécharger la version mobile iOS' action='Télécharger' icon='' iconDescription='Icone iOS' /> */}
         </div>
       </main>
       <Footer />
