@@ -7,6 +7,12 @@ import iconAPKReverse from '@/public/images/dark/MaterialSymbolsAndroid.svg'
 
 
 const Home = () => {
+    var _mtm = window._mtm = window._mtm || [];
+  _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+  (function() {
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src='https://matomo.webapps24.eu/js/container_ChvuZoFC.js'; s.parentNode.insertBefore(g,s);
+  })();
     return (
     <>
       <Header />
