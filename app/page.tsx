@@ -4,15 +4,16 @@ import Header from "./ui/components/header"
 import ButtonLink from "./ui/components/buttonLink"
 import iconAPK from '@/public/images/light/MaterialSymbolsAndroid.svg'
 import iconAPKReverse from '@/public/images/dark/MaterialSymbolsAndroid.svg'
+import { useEffect } from "react"
+import init from "@socialgouv/matomo-next"
 
 
 const Home = () => {
-    var _mtm = window._mtm = window._mtm || [];
-  _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
-  (function() {
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.async=true; g.src='https://matomo.webapps24.eu/js/container_ChvuZoFC.js'; s.parentNode.insertBefore(g,s);
-  })();
+  const MATOMO_URL = process.env.MATOMO_URL || "https://matomo.webapps24.eu";
+  const MATOMO_SITE_ID = process.env.MATOMO_SITE_ID || "1";
+  useEffect(() => {
+    init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+  }, []);
     return (
     <>
       <Header />
