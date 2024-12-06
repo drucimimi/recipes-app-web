@@ -1,5 +1,5 @@
 # Recipes App
-Ce site vitrine permet de télécharger l'application de recettes sur Android et iOS.
+Ce site vitrine permet de télécharger l'application de recettes sur Android.
 
 ## Pour commencer
 
@@ -45,9 +45,9 @@ Pour lancer le projet en local, lancer la commande `bun run dev`
 
 ## Versions
 
-Dernière version stable : 2024.1.1
+Dernière version stable : 2024.1.4
 
-Dernière version : 2024.1.1
+Dernière version : 2024.1.4
 
 Liste des versions : [Cliquer pour afficher](https://github.com/drucimimi/recipes-app/tags)
 
