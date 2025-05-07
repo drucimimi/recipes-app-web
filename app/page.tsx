@@ -28,7 +28,7 @@ const Home = () => {
           Téléchargez notre application mobile dès maintenant !
         </p>
         <div className="flex flex-col lg:flex-row gap-2">
-          <ButtonLink source='/download/apk/recipes-app-2025.1.1.apk' name="Télécharger l'application Android" action='Télécharger' icon={iconAPK} iconReverse={iconAPKReverse} iconDescription='Icone Android' />
+          <ButtonLink source='/download/apk/recipes-app-2025.1.2.apk' name="Télécharger l'application Android" action='Télécharger' icon={iconAPK} iconReverse={iconAPKReverse} iconDescription='Icone Android' />
         </div>
         {/* <div className="flex flex-col lg:flex-row gap-2">
           <ButtonLink source='/web' name="Voir la version web" action='Voir' icon={iconWeb} iconReverse={iconWebReverse} iconDescription='Icone Web' />
