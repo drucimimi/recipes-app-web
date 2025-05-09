@@ -1,21 +1,11 @@
 import { createContext, useContext, useState } from 'react';
+import { UserResponse, AuthContextType } from '@/types/definitions';
 
-type Profile = {
-    id:string,
-    pseudo:string,
-    avatar:string
-}
-
-type User = { userId: string; profile: Profile, token: string, userRole:string}
-
-type AuthContextType = {
-  user: User | null
-}
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserResponse | null>(null);
 
   return (
     <AuthContext.Provider value={{ user }}>
