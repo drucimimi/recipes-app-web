@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import * as React from 'react'
 import styles from '@/app/ui/styles/button.module.css'
-import Icon from './icon'
+import Icon from '@/components/ui/icon'
 
 interface  ButtonLinkProps {
   source:string,
@@ -17,7 +17,7 @@ const ButtonLink: React.FunctionComponent<ButtonLinkProps> = (props) => {
     <Icon image={props.icon} description={props.iconDescription} imageReverse={props.iconReverse}/> 
     <Link 
       href={props.source} 
-      className={props.action === "Supprimer" ? styles.red : props.action === "Modifier" ? styles.blue : props.action === "Ajouter" ? styles.green : styles.white}> 
+      className={props.action === "Supprimer" ? styles.red : props.action === "Modifier" ? styles.blue : props.action === "Ajouter" ? styles.green : styles.whiteBlack}> 
       <p>{props.name}</p>
     </Link>
   </div>

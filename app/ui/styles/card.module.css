@@ -1,0 +1,19 @@
+.card{
+    @apply w-64 rounded overflow-hidden shadow-lg;
+}
+
+.cardHeader{
+    @apply w-full h-56 relative;
+}
+
+.cardBody{
+    @apply bg-green-400 h-28 px-6 py-4;
+}
+
+.cardFooter{
+    @apply bg-green-300 text-lg px-6 pt-4 pb-2;
+}
+
+.cardFooter a{
+    @apply text-black dark:text-white;
+}
