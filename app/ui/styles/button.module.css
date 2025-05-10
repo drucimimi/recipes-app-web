@@ -10,6 +10,6 @@
 .green{
     @apply text-green-500;
 }
-.white{
-    @apply text-black dark:text-white;
+.whiteBlack{
+    @apply dark:text-white;
 }

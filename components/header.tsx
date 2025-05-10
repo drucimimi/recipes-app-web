@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styles from '@/app/ui/styles/header.module.css'
-import Icon from './icon'
+import Icon from '@/components/ui/icon'
 import logo from '@/public/images/light/logo.svg'
 import logoReverse from '@/public/images/dark/logo.svg'
 

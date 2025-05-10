@@ -1,13 +1,15 @@
 'use client'
-import Footer from "./ui/components/footer"
-import Header from "./ui/components/header"
-import ButtonLink from "./ui/components/buttonLink"
+import Footer from "@/components/footer"
+import Header from "@/components/header"
+import ButtonLink from "../components/ui/buttonLink"
 import iconAPK from '@/public/images/light/MaterialSymbolsAndroid.svg'
 import iconAPKReverse from '@/public/images/dark/MaterialSymbolsAndroid.svg'
 import { useEffect } from "react"
 import init from "@socialgouv/matomo-next"
 import iconWeb from '@/public/images/light/MdiWeb.svg'
 import iconWebReverse from '@/public/images/dark/MdiWeb.svg'
+import { CustomDialog } from "@/components/custom-dialog"
+import { Button } from "@/components/ui/button"
 
 
 const Home = () => {
@@ -30,6 +32,7 @@ const Home = () => {
         <div className="flex flex-col lg:flex-row gap-2">
           <ButtonLink source='/download/apk/recipes-app-2025.1.2.apk' name="Télécharger l'application Android" action='Télécharger' icon={iconAPK} iconReverse={iconAPKReverse} iconDescription='Icone Android' />
         </div>
+        
         {/* <div className="flex flex-col lg:flex-row gap-2">
           <ButtonLink source='/web' name="Voir la version web" action='Voir' icon={iconWeb} iconReverse={iconWebReverse} iconDescription='Icone Web' />
         </div> */}

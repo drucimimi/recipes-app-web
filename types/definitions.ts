@@ -20,6 +20,7 @@ export type Recipe = {
     image:string,
     recipients:string[],
     instructions:string,
+    createdDate:string,
     userId:string,
     author:string
 }
