@@ -18,6 +18,23 @@ const AuthContext = createContext<AuthContextType | null>(null)
       </AuthProvider>
     )
   }
+
+  // Dans une page
+  import { useAuth } from "@/context/AuthContext";
+
+  export default function Page() {
+    const { user, login, logout } = useAuth()
+
+    return (
+      <div>
+        {!user ? (
+          <button onClick={login}>Connecter</button>
+        ) : (
+          <button onClick={logout}>Déconnecter</button>
+        )}
+      </div>
+    )
+  }
 ```
  */
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
