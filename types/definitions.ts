@@ -9,7 +9,9 @@ export type Profile = {
 export type UserResponse = { userId: string; profile: Profile, token: string, userRole:string}
 
 export type AuthContextType = {
-  user: UserResponse | null
+  user: UserResponse | null,
+  login:Function,
+  logout:Function
 }
 
 export type Recipe = {
