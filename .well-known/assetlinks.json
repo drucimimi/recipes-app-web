@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.recipes_app",
+      "sha256_cert_fingerprints": [
+        "E9:CF:9C:C1:F3:4B:DC:FA:3A:AE:59:58:25:DE:C0:F1:5D:3E:FC:EE:C6:46:8F:A3:00:0A:AA:2D:91:4A:8E:1D"
+      ]
+    }
+  }
+]

@@ -8,8 +8,6 @@ import { useEffect } from "react"
 import init from "@socialgouv/matomo-next"
 import iconWeb from '@/public/images/light/MdiWeb.svg'
 import iconWebReverse from '@/public/images/dark/MdiWeb.svg'
-import { CustomDialog } from "@/components/custom-dialog"
-import { Button } from "@/components/ui/button"
 
 
 const Home = () => {
@@ -30,7 +28,7 @@ const Home = () => {
           Téléchargez notre application mobile dès maintenant !
         </p>
         <div className="flex flex-col lg:flex-row gap-2">
-          <ButtonLink source='/download/apk/recipes-app-2025.1.2.apk' name="Télécharger l'application Android" action='Télécharger' icon={iconAPK} iconReverse={iconAPKReverse} iconDescription='Icone Android' />
+          <ButtonLink source='/download/apk/recipes-app-2025.1.3.apk' name="Télécharger l'application Android" action='Télécharger' icon={iconAPK} iconReverse={iconAPKReverse} iconDescription='Icone Android' />
         </div>
         
         {/* <div className="flex flex-col lg:flex-row gap-2">
