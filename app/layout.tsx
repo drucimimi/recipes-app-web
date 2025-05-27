@@ -5,7 +5,10 @@ import "@/app/ui/styles/globals.css"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Recipes App",
+  title: {
+    template: '%s | Recipes App',
+    default: "Recipes App",
+  },
   description: "Découvrir et/ou créer des recettes de cuisine",
   icons: {
     icon: '/images/favicon.ico',
@@ -15,7 +18,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://recipes-app.webapps24.eu'),
   openGraph: {
     title: 'Recipes App',
-    description: 'Découvrir et/ou créer des recettes de cuisine',
+    description: 'Découvrir et/ou créer, supprimer des recettes de cuisine',
     url: 'https://recipes-app.webapps24.eu',
     siteName: 'Recipes App',
     images: '/images/og-image.png',
@@ -24,10 +27,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: 'Recipes App',
-    description: 'Découvrir et/ou créer des recettes de cuisine',
+    description: 'Découvrir et/ou créer, supprimer des recettes de cuisine',
     images: '/images/og-image.png',
   },
-};
+}
 
 export default function RootLayout({
   children,
@@ -35,10 +38,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="fr">
         <body className={inter.className}>
             {children}
         </body>
     </html>
-  );
+  )
 }
