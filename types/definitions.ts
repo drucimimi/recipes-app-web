@@ -6,7 +6,7 @@ export type Profile = {
     avatar:string
 }
 
-export type UserResponse = { userId: string; profile: Profile, token: string, userRole:string}
+export type UserResponse = { userId: string; profile: Profile, token: string, roleName:string}
 
 export type Recipe = {
     id:string,
