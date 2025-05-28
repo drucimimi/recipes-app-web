@@ -17,6 +17,7 @@ import iconBackLogin from "@/public/images/light/MaterialSymbolsArrowBack.svg"
 import iconReverseBackLogin from "@/public/images/dark/MaterialSymbolsArrowBack.svg"
 import { apiRequest } from "@/services/httpCall"
 import { useRouter } from "next/navigation"
+import { setCookie } from "cookies-next"
 
 interface RegisterFormData {
   avatar: any
@@ -27,12 +28,11 @@ interface RegisterFormData {
 }
 
 const Register = () => {
-    const MATOMO_URL = process.env.MATOMO_URL || "https://matomo.webapps24.eu";
-      const MATOMO_SITE_ID = process.env.MATOMO_SITE_ID || "1";
-      useEffect(() => {
-        init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
-      }, [])
-
+    const MATOMO_URL = process.env.MATOMO_URL || "https://matomo.webapps24.eu"
+    const MATOMO_SITE_ID = process.env.MATOMO_SITE_ID || "1"
+    useEffect(() => {
+        init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID })
+    }, [])
     const [formData, setFormData] = useState<RegisterFormData>({
         avatar: null,
         pseudo: "",
@@ -40,22 +40,16 @@ const Register = () => {
         password: "",
         acceptCgu: false,
     })
-
     const [isLoading, setIsLoading] = useState(false)
-
     const [error, setError] = useState("")
-
     const router = useRouter()
-
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null
         setFormData({"avatar":file})
     }
-
     const handleInputChange = (field: keyof RegisterFormData, value: string | boolean) => {
         setFormData((prev) => ({ ...prev, [field]: value }))
     }
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
@@ -71,7 +65,9 @@ const Register = () => {
         formRegisterData.append("password", formData.password)
         const response = await apiRequest('/auth/register', {method: 'POST', body:formRegisterData}, true)
         if(response.status == 201){
-            router.push(`/web/login?message=${encodeURIComponent(await response.text())}`)
+            const message = await response.text()
+            setCookie("message", message, { secure: true, sameSite: "strict" })
+            router.push(`/web/login`)
         } else if(response.status == 400){
             const data = await response.json()
             setError(data["errors"][0])
@@ -80,7 +76,7 @@ const Register = () => {
             const data = await response.json()
             setError(data["message"])
             setIsLoading(false)
-        } else if(response.status == 409){
+        } else if(response.status == 429){
             setError("Limite de requêtes atteinte. Réessayez demain.")
             setIsLoading(false)
         } else {
@@ -92,7 +88,7 @@ const Register = () => {
     return (
         <>
         <Header icon={iconRegister} iconReverse={iconReverseRegister} iconDescription={"Logo inscription"} title={"Inscription"} hasMenu={false} role={""} />
-        <main className="flex flex-col items-center justify-center flex-1 px-10 pb-10 pt-0">
+        <main className="flex flex-col items-center justify-center flex-1 p-10">
             <Card>
                 <CardHeader>
                     <CardTitle><ButtonLink source={"/web/login"} name={"Retour à la page de connexion"} action={"Retour"} icon={iconReverseBackLogin} iconReverse={iconBackLogin} iconDescription={"Retour à la page de connexion"}></ButtonLink></CardTitle>

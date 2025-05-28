@@ -13,11 +13,18 @@ import iconWebReverse from '@/public/images/dark/MdiWeb.svg'
 
 
 const Home = () => {
-  const MATOMO_URL = process.env.MATOMO_URL || "https://matomo.webapps24.eu"
-  const MATOMO_SITE_ID = process.env.MATOMO_SITE_ID || "1"
-  useEffect(() => {
-    init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID })
-  }, [])
+    const MATOMO_URL = process.env.MATOMO_URL || "https://matomo.webapps24.eu"
+    const MATOMO_SITE_ID = process.env.MATOMO_SITE_ID || "1"
+    useEffect(() => {
+      init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID })
+    }, [])
+    /* A utiliser pour récupérer le user
+    const user = getCookie("userDetail") || null
+    const json = JSON.parse(user)
+    console.log(json["userId"])
+    const logout = () => {
+        deleteCookie("userDetail")
+    }*/
     return (
     <>
       <Header icon={logo} iconReverse={logoReverse} iconDescription={"Logo Recipes App"} title={"Recipes App"} hasMenu={false} role={""} />
@@ -32,6 +39,14 @@ const Home = () => {
         <div className="flex flex-col lg:flex-row gap-2">
           <ButtonLink source='/download/apk/recipes-app-2025.1.3.apk' name="Télécharger l'application Android" action='Télécharger' icon={iconAPK} iconReverse={iconAPKReverse} iconDescription='Icone Android' />
         </div>
+        {/* <div>
+        A utiliser dans le menu de navigation
+         {!user ? (
+          <Link href="/web/login">Se connecter</Link>
+        ) : (
+           <button onClick={logout}>Se déconnecter</button>
+        )}
+      </div> */}
         
         {/* <div className="flex flex-col lg:flex-row gap-2">
           <ButtonLink source='/web' name="Voir la version web" action='Voir' icon={iconWeb} iconReverse={iconWebReverse} iconDescription='Icone Web' />
