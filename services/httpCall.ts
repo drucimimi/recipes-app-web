@@ -21,7 +21,7 @@ export async function apiRequest(
   isFormData: boolean = false
 ): Promise<Response> {
   const { method = 'GET', body, headers } = options
-  const endpoint = 'https://recipes-api.webapps24.eu/api'+url
+  const endpoint = /*'https://recipes-api.webapps24.eu/api'*/'http://localhost:8080/api'+url
   const fetchOptions : RequestInit = {
     method,
     headers: {

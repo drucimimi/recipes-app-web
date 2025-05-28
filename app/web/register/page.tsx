@@ -17,7 +17,7 @@ import iconBackLogin from "@/public/images/light/MaterialSymbolsArrowBack.svg"
 import iconReverseBackLogin from "@/public/images/dark/MaterialSymbolsArrowBack.svg"
 import { apiRequest } from "@/services/httpCall"
 import { useRouter } from "next/navigation"
-import { setCookie } from "cookies-next"
+import { getCookie, setCookie } from "cookies-next"
 
 interface RegisterFormData {
   avatar: any
@@ -28,6 +28,10 @@ interface RegisterFormData {
 }
 
 const Register = () => {
+    const router = useRouter()
+    if(getCookie("userDetail") != null){
+        router.push("/web")
+    }
     const MATOMO_URL = process.env.MATOMO_URL || "https://matomo.webapps24.eu"
     const MATOMO_SITE_ID = process.env.MATOMO_SITE_ID || "1"
     useEffect(() => {
@@ -42,7 +46,6 @@ const Register = () => {
     })
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
-    const router = useRouter()
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null
         setFormData({"avatar":file})

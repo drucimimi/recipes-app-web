@@ -1,4 +1,4 @@
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
 export type Profile = {
     id:string,
@@ -7,12 +7,6 @@ export type Profile = {
 }
 
 export type UserResponse = { userId: string; profile: Profile, token: string, userRole:string}
-
-export type AuthContextType = {
-  user: UserResponse | null,
-  login:Function,
-  logout:Function
-}
 
 export type Recipe = {
     id:string,

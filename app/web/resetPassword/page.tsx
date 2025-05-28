@@ -1,87 +1,74 @@
 "use client"
 import Footer from "@/components/footer"
 import Header from "@/components/header"
+import { Button } from "@/components/ui/button"
 import ButtonLink from "@/components/ui/buttonLink"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { apiRequest } from "@/services/httpCall"
+import { getCookie, setCookie } from "cookies-next"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
+import iconResetPass from "@/public/images/light/MaterialSymbolsLockReset.svg"
+import iconReverseResetPass from "@/public/images/dark/MaterialSymbolsLockReset.svg"
 import iconBackHome from "@/public/images/light/MaterialSymbolsArrowBack.svg"
 import iconReverseBackHome from "@/public/images/dark/MaterialSymbolsArrowBack.svg"
-import { useEffect, useState } from "react"
-import init from "@socialgouv/matomo-next"
-import Link from "next/link"
-import { apiRequest } from "@/services/httpCall"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { deleteCookie, getCookie, setCookie } from "cookies-next"
-import iconLogin from "@/public/images/light/MaterialSymbolsLogin.svg"
-import iconReverseLogin from "@/public/images/dark/MaterialSymbolsLogin.svg"
 
-interface LoginFormData {
+interface ResetPassFormData {
   email: string
   password: string
 }
 
-const Login = () => {
+const ResetPassword = () => {
     const router = useRouter()
-    if(getCookie("userDetail") != null){
-        router.push("/web")
+    const userDetail = getCookie("userDetail") || null
+    if(userDetail == null){
+        router.push("/web/login")
     }
-    const MATOMO_URL = process.env.MATOMO_URL || "https://matomo.webapps24.eu"
-    const MATOMO_SITE_ID = process.env.MATOMO_SITE_ID || "1"
-    useEffect(() => {
-        init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID })
-    }, [])
-    let message = getCookie("message") || null
-    setTimeout( () => {
-        message != null && deleteCookie("message")
-    }, 5000)
-    const [formData, setFormData] = useState<LoginFormData>({
-            email: "",
-            password: ""
+    const userId = userDetail != null ? JSON.parse(userDetail)["userId"] : null
+    const userToken = userDetail != null ? JSON.parse(userDetail)["token"] : null
+    const [formData, setFormData] = useState<ResetPassFormData>({
+        email: "",
+        password: ""
     })
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
-    const handleInputChange = (field: keyof LoginFormData, value: string | boolean) => {
+    const handleInputChange = (field: keyof ResetPassFormData, value: string | boolean) => {
         setFormData((prev) => ({ ...prev, [field]: value }))
     }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
-        const response = await apiRequest('/auth/login', {method: 'POST', headers: {'Content-Type':'application/json'}, body:{"email":formData.email, "password":formData.password}})
+        const response = await apiRequest(`/user/${userId}`, {method: 'PATCH', headers: {'Content-Type':'application/json', 'Authorization': `Bearer ${userToken}`}, body:{"email":formData.email, "password":formData.password}})
         if(response.status == 200){
-            const userData = await response.json()
-            setCookie("userDetail", userData, { secure: true, sameSite: "strict" })
-            router.push(`/web`)
-        } else if(response.status == 401){
-            setError("Email ou mot de passe incorrect")
+            const message = await response.text()
+            setCookie("message", message, { secure: true, sameSite: "strict" })
+            router.push(`/web/profile`)
+        } else if(response.status == 400){
+            const data = await response.json()
+            setError(data["errors"][0])
             setIsLoading(false)
-        } else if(response.status == 403 || response.status == 404){
-            setError(await response.text())
+        } else if(response.status == 404){
+            setError("Utilisateur non trouvé")
             setIsLoading(false)
         } else if(response.status == 429){
-            if(response.body != null){
-                const data = await response.json()
-                setError(data["detail"])
-            } else {
-                setError("Limite de requêtes atteinte. Réessayez demain.")
-            }
+            setError("Limite de requêtes atteinte. Réessayez demain.")
             setIsLoading(false)
         } else {
-            setError("Impossible de se connecter")
+            setError("Impossible de changer votre mot de passe")
             setIsLoading(false)
         }
     }
-    return(
+    return (
         <>
-        <Header icon={iconLogin} iconReverse={iconReverseLogin} iconDescription={"Logo connexion"} title={"Connexion"} hasMenu={false} role={""} />
+        <Header icon={iconResetPass} iconReverse={iconReverseResetPass} iconDescription={"Logo réinitialisation"} title={"Changement de mot de passe"} hasMenu={false} role={""} />
         <main className="flex flex-col items-center justify-center flex-1 p-10">
             <Card>
                 <CardHeader>
-                    <CardTitle><ButtonLink source={"/web"} name={"Retour à la page d'accueil"} action={"Retour"} icon={iconReverseBackHome} iconReverse={iconBackHome} iconDescription={"Retour à la page d'accueil"}></ButtonLink></CardTitle>
+                    <CardTitle><ButtonLink source={"/web/profile"} name={"Retour à la page du profil"} action={"Retour"} icon={iconReverseBackHome} iconReverse={iconBackHome} iconDescription={"Retour à la page du profil"}></ButtonLink></CardTitle>
                 </CardHeader>
                 <CardContent>
-                    {message && <p className="text-green-500">{message}</p>}
                     <form onSubmit={handleSubmit} className="space-y-6 my-4">
                         {error && <p className="text-red-500">{error}</p>}
                         {/* Email */}
@@ -112,10 +99,9 @@ const Login = () => {
                         
                         {/* Submit Button */}
                         <Button type="submit" className="bg-green-100 text-green-500" disabled={isLoading}>
-                            Se connecter
+                            Changer
                         </Button>
                     </form>
-                    <Link href={"/web/register"} className="text-green-500 underline">Créer un compte</Link>
                 </CardContent>
             </Card>
         </main>
@@ -123,4 +109,4 @@ const Login = () => {
         </>
     )
 }
-export default Login
+export default ResetPassword
