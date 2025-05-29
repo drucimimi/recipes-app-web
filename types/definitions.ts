@@ -8,6 +8,12 @@ export type Profile = {
 
 export type UserResponse = { userId: string; profile: Profile, token: string, roleName:string}
 
+export type DecodeUserResponse = {
+    userDetail:UserResponse,
+    expiresAt:string,
+    exp:number
+} 
+
 export type Recipe = {
     id:string,
     name:string,

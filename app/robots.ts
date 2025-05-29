@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/private/',
+      disallow: '/web/protected',
     },
     sitemap: 'https://recipes-app.webapps24.eu/sitemap.xml',
   };

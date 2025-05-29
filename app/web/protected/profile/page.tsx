@@ -1,7 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation"
-import { deleteCookie, getCookie, setCookie } from "cookies-next"
-import { useState } from "react"
+import { deleteCookie, getCookie } from "cookies-next"
+import { useEffect, useState } from "react"
 import { apiRequest } from "@/services/httpCall"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
@@ -18,6 +18,8 @@ import iconReverseResetPass from "@/public/images/dark/MaterialSymbolsLockReset.
 import Image from "next/image"
 import { CustomDialog } from "@/components/custom-dialog"
 import { DialogClose } from "@radix-ui/react-dialog"
+import { UserResponse } from "@/types/definitions"
+import { createSession, deleteSessionCookie } from "@/services/authProvider"
 
 interface ProfileFormData {
   avatar: any
@@ -26,15 +28,30 @@ interface ProfileFormData {
 
 const Profile = () => {
     const router = useRouter()
-    const userDetailString = getCookie("userDetail") || null
-    if(userDetailString == null){
-        router.push("/web/login")
-    }
     let message = getCookie("message") || null
     setTimeout( () => {
         message != null && deleteCookie("message")
     }, 5000)
-    const userDetail = userDetailString != null ? JSON.parse(userDetailString) : null
+    const [userDetail, setUserDetail] = useState<UserResponse>({userId:"", profile:{id:"", pseudo:"", avatar:""}, token: "", roleName:""})
+    const [loading, setLoading] = useState(true);
+    useEffect( () => {
+        async function fetchUser() {
+            try {
+                const res = await fetch('/api/user', { credentials: 'include' })
+                if (res.ok) {
+                    const data = await res.json()
+                    setUserDetail(data)
+                } else {
+                    setError(await res.text())
+                }
+            } catch (error) {
+                console.error(error)
+            }  finally {
+                setLoading(false);
+            }
+        }
+        fetchUser()
+    }, [])
     const [formData, setFormData] = useState<ProfileFormData>({
         avatar: null,
         pseudo: ""
@@ -46,7 +63,7 @@ const Profile = () => {
     const [error, setError] = useState("")
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null
-        setFormData({"avatar":file})
+        setFormData((prev) => ({...prev, "avatar":file}))
     }
     const handleInputChange = (field: keyof ProfileFormData, value: string | boolean) => {
         setFormData((prev) => ({ ...prev, [field]: value }))
@@ -57,10 +74,12 @@ const Profile = () => {
         const formProfileData = new FormData()
         formProfileData.append("avatar", formData.avatar)
         formProfileData.append("pseudo", formData.pseudo)
-        const response = await apiRequest(`/profile/${userDetail["profile"].id}`, {method: 'PUT', headers: {'Authorization': `Bearer ${userDetail["token"]}`}, body:formProfileData}, true)
+        const response = await apiRequest(`/profile/${userDetail.profile.id}`, {method: 'PUT', headers: {'Authorization': `Bearer ${userDetail.token}`}, body:formProfileData}, true)
         if(response.status == 200){
             const data = await response.json()
-            setCookie("userDetail", {"userId":userDetail["userId"], "profile":data, "token":userDetail["token"], "roleName":userDetail["roleName"]})
+            userDetail.profile = data
+            createSession(userDetail)
+            //setCookie("userDetail", {"userId":userDetail["userId"], "profile":data, "token":userDetail["token"], "roleName":userDetail["roleName"]})
             setNewPseudo(data["pseudo"])
             setNewAvatar(data["avatar"])
             setError("")
@@ -83,17 +102,19 @@ const Profile = () => {
         }
     }
     const deleteAccount = async () => {
-        const response = await apiRequest(`/user/${userDetail["userId"]}`, { method: 'DELETE', headers: {'Content-Type':'application/json', 'Authorization': `Bearer ${userDetail["token"]}`}})
+        const response = await apiRequest(`/user/${userDetail.userId}`, { method: 'DELETE', headers: {'Content-Type':'application/json', 'Authorization': `Bearer ${userDetail.token}`}})
         if(response.status == 200){
-            deleteCookie("userDetail")
+            deleteSessionCookie()
             router.push('/web')
         } else {
             setError("Impossible de supprimer l'utilisateur")
         }
     }
+    if (loading) return <p>Chargement...</p>
+    if (!userDetail) return <p>Utilisateur non connecté.</p>
     return (
         <>
-        <Header icon={iconProfile} iconReverse={iconReverseProfile} iconDescription={"Logo compte utilisateur"} title={"Mon profil"} hasMenu={true} role={userDetail["roleName"]} />
+        <Header icon={iconProfile} iconReverse={iconReverseProfile} iconDescription={"Logo compte utilisateur"} title={"Mon profil"} hasMenu={true} role={userDetail?.roleName} userInfo={userDetail} />
         <main className="flex flex-col items-center justify-center flex-1 p-10">
             <Card>
                 <CardContent>
@@ -104,7 +125,7 @@ const Profile = () => {
                         {/* Avatar */}
                         <div className="space-y-2">
                             <Label htmlFor="avatar">Avatar</Label>
-                            <Image src={newAvatar != "" ? newAvatar : userDetail["profile"].avatar} alt={"avatar"} width={200} height={200}/>
+                            {/* <Image src={newAvatar != "" ? newAvatar : userDetail.profile.avatar} alt={"avatar"} width={200} height={200}/> */}
                             <div className="flex items-center gap-2">
                             <Input id="avatar" type="file" onChange={handleFileChange} className="cursor-pointer" />
                             <Upload className="h-4 w-4 text-muted-foreground" />
@@ -120,7 +141,7 @@ const Profile = () => {
                             <Input
                             id="pseudo"
                             type="text"
-                            placeholder={newPseudo != "" ? newPseudo : userDetail["profile"].pseudo}
+                            placeholder={newPseudo != "" ? newPseudo : userDetail.profile.pseudo}
                             value={formData.pseudo}
                             onChange={(e) => handleInputChange("pseudo", e.target.value)}
                             />
@@ -132,7 +153,7 @@ const Profile = () => {
                             Enregistrer
                         </Button>
                     </form>
-                    <ButtonLink source={"/web/resetPassword"} name={"Changer le mot de passe"} action={"Changer"} icon={iconReverseResetPass} iconReverse={iconResetPass} iconDescription={"Logo réinitialisation"}></ButtonLink>
+                    <ButtonLink source={"/web/protected/resetPassword"} name={"Changer le mot de passe"} action={"Changer"} icon={iconReverseResetPass} iconReverse={iconResetPass} iconDescription={"Logo réinitialisation"}></ButtonLink>
                     <CustomDialog
                         trigger={<Button variant="destructive">Supprimer le compte</Button>}
                         title="Suppression du compte"

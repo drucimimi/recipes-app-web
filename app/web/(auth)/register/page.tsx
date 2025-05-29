@@ -29,9 +29,6 @@ interface RegisterFormData {
 
 const Register = () => {
     const router = useRouter()
-    if(getCookie("userDetail") != null){
-        router.push("/web")
-    }
     const MATOMO_URL = process.env.MATOMO_URL || "https://matomo.webapps24.eu"
     const MATOMO_SITE_ID = process.env.MATOMO_SITE_ID || "1"
     useEffect(() => {
@@ -48,7 +45,7 @@ const Register = () => {
     const [error, setError] = useState("")
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null
-        setFormData({"avatar":file})
+        setFormData((prev) => ({ ...prev, "avatar":file }))
     }
     const handleInputChange = (field: keyof RegisterFormData, value: string | boolean) => {
         setFormData((prev) => ({ ...prev, [field]: value }))

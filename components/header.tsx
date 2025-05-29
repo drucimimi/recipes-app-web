@@ -1,11 +1,13 @@
+"use client"
 import * as React from 'react'
 import styles from '@/app/ui/styles/header.module.css'
 import Icon from '@/components/ui/icon'
 import Link from 'next/link'
 import { Button } from './ui/button'
 import { apiRequest } from '@/services/httpCall'
-import { deleteCookie, getCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
+import { deleteSessionCookie } from '@/services/authProvider'
+import { UserResponse } from '@/types/definitions'
 
 interface HeaderProps {
   icon:string,
@@ -13,17 +15,16 @@ interface HeaderProps {
   iconDescription:string
   title:string,
   hasMenu:boolean,
-  role:string
+  role:string,
+  userInfo?:UserResponse|null
 }
 
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
   const router = useRouter()
-  const userDetailString = getCookie("userDetail") || null
-  const userDetail = userDetailString != null ? JSON.parse(userDetailString) : null
   const logout = async () => {
-    const response = await apiRequest(`/auth/logout`, { headers: {'Content-Type':'application/json', 'Authorization': `Bearer ${userDetail["token"]}`}})
+    const response = await apiRequest(`/auth/logout`, { headers: {'Content-Type':'application/json', 'Authorization': `Bearer ${props.userInfo?.token}`}})
     if(response.status == 200){
-      deleteCookie("userDetail")
+      await deleteSessionCookie()
       router.push("/web")
     } else {
       console.error("Impossible de se déconnecter")
@@ -41,14 +42,14 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
         </li>
         {props.role == "ADMIN" || props.role == "USER" ? <li>
           <details className='cursor-pointer'>
-            <summary><Link href="/web/profile">Mon Profil</Link></summary>
+            <summary><Link href="/web/protected/profile">Mon Profil</Link></summary>
             <Button type="button" onClick={logout} className="bg-transparent">Déconnexion</Button>
           </details>
         </li> : <li>
           <Link href="/web/login">Connexion</Link>
         </li>}
         {props.role == "ADMIN" && <li>
-          <Link href="/web/admin">Administration</Link>
+          <Link href="/web/protected/admin">Administration</Link>
         </li>}
       </ul>
     </div>}
