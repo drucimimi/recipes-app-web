@@ -1,4 +1,4 @@
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
 export type Profile = {
     id:string,
@@ -6,13 +6,13 @@ export type Profile = {
     avatar:string
 }
 
-export type UserResponse = { userId: string; profile: Profile, token: string, userRole:string}
+export type UserResponse = { userId: string; profile: Profile, token: string, roleName:string}
 
-export type AuthContextType = {
-  user: UserResponse | null,
-  login:Function,
-  logout:Function
-}
+export type DecodeUserResponse = {
+    userDetail:UserResponse,
+    expiresAt:string,
+    exp:number
+} 
 
 export type Recipe = {
     id:string,
@@ -24,7 +24,8 @@ export type Recipe = {
     instructions:string,
     createdDate:string,
     userId:string,
-    author:string
+    author:string,
+    status:string
 }
 
 export type PageRecipe = {

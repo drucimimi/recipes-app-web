@@ -1,16 +1,68 @@
+"use client"
 import * as React from 'react'
 import styles from '@/app/ui/styles/header.module.css'
 import Icon from '@/components/ui/icon'
-import logo from '@/public/images/light/logo.svg'
-import logoReverse from '@/public/images/dark/logo.svg'
+import Link from 'next/link'
+import { Button } from './ui/button'
+import { apiRequest } from '@/services/httpCall'
+import { usePathname, useRouter } from 'next/navigation'
+import { deleteSessionCookie } from '@/services/authProvider'
+import { UserResponse } from '@/types/definitions'
+import { deleteCookie } from 'cookies-next'
+import path from 'path'
 
+interface HeaderProps {
+  icon:string,
+  iconReverse:string,
+  iconDescription:string
+  title:string,
+  hasMenu:boolean,
+  role:string,
+  userInfo?:UserResponse|null
+}
 
-const Header: React.FunctionComponent = () => {
+const Header: React.FunctionComponent<HeaderProps> = (props) => {
+  const router = useRouter()
+  const pathname = usePathname()
+  const logout = async () => {
+    const response = await apiRequest(`/auth/logout`, { headers: {'Content-Type':'application/json', 'Authorization': `Bearer ${props.userInfo?.token}`}})
+    if(response.status == 200){
+      deleteSessionCookie()
+      deleteCookie("pseudo")
+      deleteCookie("avatar")
+      deleteCookie("recipe")
+      if(pathname != "/web"){
+        router.push("/web")
+      } else {
+        window.location.reload()
+      }
+    } else {
+      console.error("Impossible de se déconnecter")
+    }
+  }
   return <header className={styles.header}>
     <div className={styles.headerTitle}>
-        <Icon image={logo} description='Logo Recipes App' imageReverse={logoReverse}/>
-        <h1>Recipes App</h1>
+        <Icon image={props.icon} description={props.iconDescription} imageReverse={props.iconReverse}/>
+        <h1>{props.title}</h1>
     </div>
+    { props.hasMenu && <div>
+      <ul className='flex flex-col md:flex-row gap-2 justify-center items-center'>
+        <li>
+          <Link href="/web">Accueil</Link>
+        </li>
+        {props.role == "ADMIN" || props.role == "USER" ? <li>
+          <details className='cursor-pointer'>
+            <summary><Link href="/web/protected/profile">Mon Profil</Link></summary>
+            <Button type="button" onClick={logout} className="bg-transparent">Déconnexion</Button>
+          </details>
+        </li> : <li>
+          <Link href="/web/login">Connexion</Link>
+        </li>}
+        {props.role == "ADMIN" && <li>
+          <Link href="/web/protected/admin">Administration</Link>
+        </li>}
+      </ul>
+    </div>}
   </header>
 }
 export default Header
