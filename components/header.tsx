@@ -28,6 +28,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
       deleteSessionCookie()
       deleteCookie("pseudo")
       deleteCookie("avatar")
+      deleteCookie("recipe")
       router.push("/web")
     } else {
       console.error("Impossible de se déconnecter")

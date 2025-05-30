@@ -1,15 +1,13 @@
 import { Recipe } from "@/types/definitions";
-import Link from 'next/link'
 import styles from '@/app/ui/styles/card.module.css'
 import Image from 'next/image'
+import { Button } from "./ui/button";
+import { setCookie } from "cookies-next";
+import { useRouter } from "next/router";
 
 /**
  * 
- * @param id
- * @param name
- * @param image
- * @param createdDate
- * @param author
+ * @param recipe
  * @example
  * ```
  * const response = await apiRequest('/recipes', {headers:{'Content-Type':'application/json'}})
@@ -25,22 +23,27 @@ import Image from 'next/image'
   }
     return (
         { result.recipesData ? result.recipesData.map( recipe => (
-          <RecipeCard id={recipe.id} name={recipe.name} duration={recipe.duration} durationFormatted={recipe.durationFormatted} image={recipe.image} recipients={recipe.recipients} instructions={recipe.instructions} createdDate={recipe.createdDate} userId={recipe.userId} author={recipe.author} />
+          <RecipeCard recipe={recipe} />
         )) : null}
     )
     ```
  */
-const RecipeCard : React.FunctionComponent<Recipe> = ({id, name, image, createdDate, author}) => {
+const RecipeCard : React.FunctionComponent<Recipe> = (recipe) => {
+  const router = useRouter()
+  const redirectToRecipePage = () => {
+    setCookie("recipe", JSON.stringify(recipe))
+    router.push(`/web/recipe/${recipe.id}`)
+  }
  return <div className={styles.card}>
  <div className={styles.cardHeader}>
-   <Image src={image} alt={name} layout="fill" objectFit="cover"/>
+   <Image src={recipe.image} alt={recipe.name} layout="fill" objectFit="cover"/>
  </div>
  <div className={styles.cardBody}>
-   <h2>{name}</h2>
-   <p>Créée le {createdDate} par {author}</p>
+   <h2>{recipe.name}</h2>
+   <p>Créée le {recipe.createdDate} par {recipe.author}</p>
  </div>
  <div className={styles.cardFooter}>
-   <Link href={`/web/recipe/${id}`}>Voir la recette</Link>
+  <Button type="button" onClick={redirectToRecipePage}>Voir la recette</Button>
  </div>
 </div>
 }

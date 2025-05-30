@@ -106,6 +106,7 @@ const Profile = () => {
             deleteSessionCookie()
             deleteCookie("pseudo")
             deleteCookie("avatar")
+            deleteCookie("recipe")
             router.push('/web')
         } else {
             setError("Impossible de supprimer l'utilisateur")

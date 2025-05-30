@@ -24,7 +24,8 @@ export type Recipe = {
     instructions:string,
     createdDate:string,
     userId:string,
-    author:string
+    author:string,
+    status:string
 }
 
 export type PageRecipe = {

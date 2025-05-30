@@ -15,7 +15,7 @@ import iconReverseReject from "@/public/images/dark/LineMdRemove.svg"
 import Footer from "@/components/footer"
 import Icon from "@/components/ui/icon"
 import { Button } from "@/components/ui/button"
-import ButtonLink from "@/components/ui/buttonLink"
+import { setCookie } from "cookies-next"
 
 const Admin = () => {
     const router = useRouter()
@@ -58,6 +58,10 @@ const Admin = () => {
         }
         fetchUser()
     }, [])
+    const redirectToRecipePage = (recipe:Recipe) => {
+        setCookie("recipe", JSON.stringify(recipe))
+        router.push(`/web/recipe/${recipe.id}`)
+    }
     const handleSubmit = async (e: React.FormEvent, recipeId:string, isApproved:boolean) => {
         e.preventDefault()
         setIsLoading(true)
@@ -91,7 +95,7 @@ const Admin = () => {
                     { recipes.map( (recipe) => (
                         <div className="flex flex-wrap gap-2 items-center mt-2" key={recipe.id}>
                             <p>{recipe.name}</p>
-                            <ButtonLink source={`/web/recipe/${recipe.id}`} name={""} action={"Voir"} icon={iconEye} iconReverse={iconReverseEye} iconDescription={"icone de visibilité"} />
+                            <Button type="button" onClick={() => redirectToRecipePage(recipe)}><Icon image={iconEye} imageReverse={iconReverseEye} description={"icone de visibilité"} /></Button>
                             <Button type="button" onClick={(e) => handleSubmit(e, recipe.id, true)} disabled={isLoading}><Icon image={iconApprove} imageReverse={iconReverseApprove} description={"icone de validation"} /></Button>
                             <Button type="button" onClick={(e) => handleSubmit(e, recipe.id, false)} disabled={isLoading}><Icon image={iconReject} imageReverse={iconReverseReject} description={"icone de suppression sous forme de croix"} /></Button>
                         </div>
