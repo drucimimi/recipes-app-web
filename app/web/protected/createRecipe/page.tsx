@@ -88,7 +88,11 @@ const CreateRecipe = () => {
             router.push("/web")
         } else if(response.status == 400){
             const data = await response.json()
-            setError(data["errors"][0])
+            if(data["detail"]){
+                setError(data["detail"])
+            } else {
+                setError(data["errors"][0])
+            }
             setIsLoading(false)
         } else if(response.status == 429){
             setError("Limite de requêtes atteinte. Réessayez demain.")
@@ -103,7 +107,7 @@ const CreateRecipe = () => {
     return (
         <>
         <Header icon={iconAdd} iconReverse={iconReverseAdd} iconDescription={"Logo ajout"} title={"Ajouter une recette"} hasMenu={false} role="" />
-        <main className="flex flex-col items-center justify-center flex-1 p-10">
+        <main className="flex flex-col items-center justify-center flex-1 p-10 mb-20">
             <Card>
                 <CardHeader>
                     <CardTitle><ButtonLink source={"/web"} name={"Retour à la page d'accueil"} action={"Retour"} icon={iconReverseBackHome} iconReverse={iconBackHome} iconDescription={"Retour à la page du profil"}></ButtonLink></CardTitle>

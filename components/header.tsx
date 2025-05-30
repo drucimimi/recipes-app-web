@@ -5,10 +5,11 @@ import Icon from '@/components/ui/icon'
 import Link from 'next/link'
 import { Button } from './ui/button'
 import { apiRequest } from '@/services/httpCall'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { deleteSessionCookie } from '@/services/authProvider'
 import { UserResponse } from '@/types/definitions'
 import { deleteCookie } from 'cookies-next'
+import path from 'path'
 
 interface HeaderProps {
   icon:string,
@@ -22,6 +23,7 @@ interface HeaderProps {
 
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
   const router = useRouter()
+  const pathname = usePathname()
   const logout = async () => {
     const response = await apiRequest(`/auth/logout`, { headers: {'Content-Type':'application/json', 'Authorization': `Bearer ${props.userInfo?.token}`}})
     if(response.status == 200){
@@ -29,7 +31,11 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
       deleteCookie("pseudo")
       deleteCookie("avatar")
       deleteCookie("recipe")
-      router.push("/web")
+      if(pathname != "/web"){
+        router.push("/web")
+      } else {
+        window.location.reload()
+      }
     } else {
       console.error("Impossible de se déconnecter")
     }

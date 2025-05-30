@@ -1,9 +1,14 @@
-import { Recipe } from "@/types/definitions";
+"use client"
 import styles from '@/app/ui/styles/card.module.css'
 import Image from 'next/image'
-import { Button } from "./ui/button";
-import { setCookie } from "cookies-next";
-import { useRouter } from "next/router";
+import { Button } from "./ui/button"
+import { setCookie } from "cookies-next"
+import { useRouter } from "next/navigation"
+import { Recipe } from '@/types/definitions'
+
+type RecipeComponentProps = {
+  recipe: Recipe
+}
 
 /**
  * 
@@ -28,15 +33,15 @@ import { useRouter } from "next/router";
     )
     ```
  */
-const RecipeCard : React.FunctionComponent<Recipe> = (recipe) => {
+const RecipeCard : React.FunctionComponent<RecipeComponentProps> = ({recipe}) => {
   const router = useRouter()
   const redirectToRecipePage = () => {
     setCookie("recipe", JSON.stringify(recipe))
     router.push(`/web/recipe/${recipe.id}`)
   }
- return <div className={styles.card}>
+ return <div className={styles.card} key={recipe.id}>
  <div className={styles.cardHeader}>
-   <Image src={recipe.image} alt={recipe.name} layout="fill" objectFit="cover"/>
+   <Image src={recipe.image.replace("10.0.2.2", "localhost")} alt={recipe.name} layout="fill" objectFit="cover"/>
  </div>
  <div className={styles.cardBody}>
    <h2>{recipe.name}</h2>

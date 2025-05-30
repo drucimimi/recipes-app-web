@@ -24,9 +24,10 @@ const GetRecipe = () => {
     const router = useRouter()
     const [userDetail, setUserDetail] = useState<UserResponse>({userId:"", profile:{id:"", pseudo:"", avatar:""}, token: "", roleName:""})
     const [error, setError] = useState("")
-    const [loading, setLoading] = useState(true)
-    useEffect( () => {
+    const [loading, setLoading] = useState(false)
+    useEffect( () => { 
         async function fetchUser() {
+            setLoading(true)
             try {
                 const res = await fetch('/api/user', { credentials: 'include' })
                 if (res.ok) {
@@ -54,15 +55,14 @@ const GetRecipe = () => {
         }
     }
     if (loading) return <p>Chargement...</p>
-    if (!userDetail) return <p>Utilisateur non connecté.</p>
     return (
         <>
          <Header icon={iconDetail} iconReverse={iconReverseDetail} iconDescription={"Logo détail du document"} title={`Recette ${detailRecipe.name}`} hasMenu={false} role="" />
-         <main className="flex flex-col flex-1 p-10 items-center">
+         <main className="flex flex-col flex-1 p-10 items-center mb-20">
             {error && <p className="text-red-500">{error}</p>}
             <ButtonLink source={"/web"} name={"Retour à la page d'accueil"} action={"Retour"} icon={iconBackHome} iconReverse={iconReverseBackHome} iconDescription={"Retour à la page d'accueil"}></ButtonLink>
             <div className="my-1">
-                <Image src={detailRecipe.image} alt={detailRecipe.name} width={200} height={200}/>
+                <Image src={detailRecipe.image.replace("10.0.2.2", "localhost")} alt={detailRecipe.name} width={200} height={200}/>
             </div>
             <div className="my-2">
                 <h1 className="text-2xl">{detailRecipe.name}</h1>
@@ -77,11 +77,13 @@ const GetRecipe = () => {
                     ))}
                 </ul>
             </div>
-            <div className="my-2 ml-12">
+            <div className="my-2 -ml-24">
                 <h2 className="text-xl">Instructions :</h2>
-                <p>{detailRecipe.instructions}</p>
+                {detailRecipe.instructions.split("\n").map( (instruction) => (
+                    <p>{instruction}</p>
+                ))}
             </div>
-            <div className="my-2">
+            {detailRecipe.userId == userDetail?.userId && <div className="my-2">
                 <CustomDialog
                         trigger={<Button variant="destructive">Supprimer la recette</Button>}
                         title={`Supprimer la recette ${detailRecipe.name}`}
@@ -95,7 +97,7 @@ const GetRecipe = () => {
                         Etes-vous sur de vouloir supprimer ?
                         </p>
                     </CustomDialog> 
-            </div>
+            </div>}
          </main>
          <Footer />
         </>
