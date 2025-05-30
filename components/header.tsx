@@ -8,6 +8,7 @@ import { apiRequest } from '@/services/httpCall'
 import { useRouter } from 'next/navigation'
 import { deleteSessionCookie } from '@/services/authProvider'
 import { UserResponse } from '@/types/definitions'
+import { deleteCookie } from 'cookies-next'
 
 interface HeaderProps {
   icon:string,
@@ -24,7 +25,9 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
   const logout = async () => {
     const response = await apiRequest(`/auth/logout`, { headers: {'Content-Type':'application/json', 'Authorization': `Bearer ${props.userInfo?.token}`}})
     if(response.status == 200){
-      await deleteSessionCookie()
+      deleteSessionCookie()
+      deleteCookie("pseudo")
+      deleteCookie("avatar")
       router.push("/web")
     } else {
       console.error("Impossible de se déconnecter")

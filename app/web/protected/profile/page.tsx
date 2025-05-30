@@ -1,6 +1,6 @@
 "use client"
 import { useRouter } from "next/navigation"
-import { deleteCookie, getCookie } from "cookies-next"
+import { deleteCookie, getCookie, setCookie } from "cookies-next"
 import { useEffect, useState } from "react"
 import { apiRequest } from "@/services/httpCall"
 import Header from "@/components/header"
@@ -19,7 +19,7 @@ import Image from "next/image"
 import { CustomDialog } from "@/components/custom-dialog"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { UserResponse } from "@/types/definitions"
-import { createSession, deleteSessionCookie } from "@/services/authProvider"
+import { deleteSessionCookie } from "@/services/authProvider"
 
 interface ProfileFormData {
   avatar: any
@@ -28,7 +28,7 @@ interface ProfileFormData {
 
 const Profile = () => {
     const router = useRouter()
-    let message = getCookie("message") || null
+    const message = getCookie("message") || null
     setTimeout( () => {
         message != null && deleteCookie("message")
     }, 5000)
@@ -56,8 +56,8 @@ const Profile = () => {
         avatar: null,
         pseudo: ""
     })
-    const [newPseudo, setNewPseudo] = useState("")
-    const [newAvatar, setNewAvatar] = useState("")
+    const [newPseudo, setNewPseudo] = useState(getCookie("pseudo") || "")
+    const [newAvatar, setNewAvatar] = useState(getCookie("avatar") || "")
     const [success, setSuccess] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
@@ -77,9 +77,8 @@ const Profile = () => {
         const response = await apiRequest(`/profile/${userDetail.profile.id}`, {method: 'PUT', headers: {'Authorization': `Bearer ${userDetail.token}`}, body:formProfileData}, true)
         if(response.status == 200){
             const data = await response.json()
-            userDetail.profile = data
-            createSession(userDetail)
-            //setCookie("userDetail", {"userId":userDetail["userId"], "profile":data, "token":userDetail["token"], "roleName":userDetail["roleName"]})
+            setCookie("pseudo", data["pseudo"])
+            setCookie("avatar", data["avatar"])
             setNewPseudo(data["pseudo"])
             setNewAvatar(data["avatar"])
             setError("")
@@ -105,6 +104,8 @@ const Profile = () => {
         const response = await apiRequest(`/user/${userDetail.userId}`, { method: 'DELETE', headers: {'Content-Type':'application/json', 'Authorization': `Bearer ${userDetail.token}`}})
         if(response.status == 200){
             deleteSessionCookie()
+            deleteCookie("pseudo")
+            deleteCookie("avatar")
             router.push('/web')
         } else {
             setError("Impossible de supprimer l'utilisateur")
@@ -125,7 +126,7 @@ const Profile = () => {
                         {/* Avatar */}
                         <div className="space-y-2">
                             <Label htmlFor="avatar">Avatar</Label>
-                            {/* <Image src={newAvatar != "" ? newAvatar : userDetail.profile.avatar} alt={"avatar"} width={200} height={200}/> */}
+                            <Image src={newAvatar != "" ? newAvatar : userDetail.profile.avatar} alt={"avatar"} width={200} height={200}/>
                             <div className="flex items-center gap-2">
                             <Input id="avatar" type="file" onChange={handleFileChange} className="cursor-pointer" />
                             <Upload className="h-4 w-4 text-muted-foreground" />
