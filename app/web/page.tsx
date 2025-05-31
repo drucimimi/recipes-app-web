@@ -164,7 +164,7 @@ const HomeWeb = () => {
                     {/* Liste des éléments */}
                     { isLoading ? (
                         <div className="flex justify-center items-center py-8">
-                            <div className="text-lg">Chargement...</div>
+                            <div className="text-lg"><HandSpinner /></div>
                         </div>
                     ) : <div className="flex flex-wrap gap-2 pt-4">
                             {filteredRecipes.map( (recipe) => (
