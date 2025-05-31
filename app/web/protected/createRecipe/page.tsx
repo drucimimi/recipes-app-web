@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Upload } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
+import HandSpinner from "@/components/ui/handSpinner"
 
 interface RecipeFormData {
   name: string
@@ -73,7 +74,7 @@ const CreateRecipe = () => {
         formRecipeData.append("duration", formData.duration)
         formRecipeData.append("recipients", formData.recipients)
         formRecipeData.append("instructions", formData.instructions)
-        if(formRecipeData.get("image") == null){
+        if(formData.image == null){
             setError("L'image ne peut pas être vide")
             setIsLoading(false)
             return
@@ -88,11 +89,7 @@ const CreateRecipe = () => {
             router.push("/web")
         } else if(response.status == 400){
             const data = await response.json()
-            if(data["detail"]){
-                setError(data["detail"])
-            } else {
-                setError(data["errors"][0])
-            }
+            setError(data["errors"][0])
             setIsLoading(false)
         } else if(response.status == 429){
             setError("Limite de requêtes atteinte. Réessayez demain.")
@@ -102,7 +99,7 @@ const CreateRecipe = () => {
             setIsLoading(false)
         }
     }
-    if (loading) return <p>Chargement...</p>
+    if (loading) return <HandSpinner />
     if (!userDetail) return <p>Utilisateur non connecté.</p>
     return (
         <>

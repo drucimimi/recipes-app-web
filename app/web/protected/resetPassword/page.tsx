@@ -15,6 +15,7 @@ import iconReverseResetPass from "@/public/images/dark/MaterialSymbolsLockReset.
 import iconBackHome from "@/public/images/light/MaterialSymbolsArrowBack.svg"
 import iconReverseBackHome from "@/public/images/dark/MaterialSymbolsArrowBack.svg"
 import { UserResponse } from "@/types/definitions"
+import HandSpinner from "@/components/ui/handSpinner"
 
 interface ResetPassFormData {
   email: string
@@ -77,7 +78,7 @@ const ResetPassword = () => {
             setIsLoading(false)
         }
     }
-    if (loading) return <p>Chargement...</p>
+    if (loading) return <HandSpinner />
     if (!userDetail) return <p>Utilisateur non connecté.</p>
     return (
         <>

@@ -20,6 +20,7 @@ import { CustomDialog } from "@/components/custom-dialog"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { UserResponse } from "@/types/definitions"
 import { deleteSessionCookie } from "@/services/authProvider"
+import HandSpinner from "@/components/ui/handSpinner"
 
 interface ProfileFormData {
   avatar: any
@@ -112,7 +113,7 @@ const Profile = () => {
             setError("Impossible de supprimer l'utilisateur")
         }
     }
-    if (loading) return <p>Chargement...</p>
+    if (loading) return <HandSpinner />
     if (!userDetail) return <p>Utilisateur non connecté.</p>
     return (
         <>

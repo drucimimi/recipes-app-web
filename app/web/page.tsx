@@ -15,6 +15,7 @@ import ButtonLink from "@/components/ui/buttonLink"
 import iconAdd from '@/public/images/light/MaterialSymbolsAddCircle.svg'
 import iconReverseAdd from '@/public/images/dark/MaterialSymbolsAddCircle.svg'
 import RecipeCard from "@/components/recipeCard"
+import HandSpinner from "@/components/ui/handSpinner"
 
 const HomeWeb = () => {
     const [userDetail, setUserDetail] = useState<UserResponse>({userId:"", profile:{id:"", pseudo:"", avatar:""}, token: "", roleName:""})
@@ -124,7 +125,7 @@ const HomeWeb = () => {
         e.preventDefault()
         handleSearch()
     }
-    if (loading) return <p>Chargement...</p>
+    if (loading) return <HandSpinner />
     return (
         <>
             <Header icon={logo} iconReverse={logoReverse} iconDescription={"Logo Recipes App"} title={"Recipes App"} hasMenu={true} role={userDetail?.roleName} userInfo={userDetail} />

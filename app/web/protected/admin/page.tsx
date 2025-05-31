@@ -16,6 +16,7 @@ import Footer from "@/components/footer"
 import Icon from "@/components/ui/icon"
 import { Button } from "@/components/ui/button"
 import { setCookie } from "cookies-next"
+import HandSpinner from "@/components/ui/handSpinner"
 
 const Admin = () => {
     const router = useRouter()
@@ -81,7 +82,7 @@ const Admin = () => {
             setIsLoading(false)
         }
     }
-    if (loading) return <p>Chargement...</p>
+    if (loading) return <HandSpinner />
     if (!userDetail) return <p>Utilisateur non connecté.</p>
     return (
         <>
