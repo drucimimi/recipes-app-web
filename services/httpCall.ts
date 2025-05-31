@@ -6,8 +6,6 @@ interface ApiRequestOptions {
   headers?: HeadersInit
 }
 
-const apiUrl = new TextEncoder().encode(process.env.API_URL);
-
 /**
  * Effectue une requête HTTP vers mon API REST de recettes.
  * @param url L'url d'une route API.
@@ -23,7 +21,7 @@ export async function apiRequest(
   isFormData: boolean = false
 ): Promise<Response> {
   const { method = 'GET', body, headers } = options
-  const endpoint = apiUrl+url
+  const endpoint = 'https://recipes-api.webapps24.eu'+url
   const fetchOptions : RequestInit = {
     method,
     headers: {
