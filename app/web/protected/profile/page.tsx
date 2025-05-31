@@ -118,7 +118,7 @@ const Profile = () => {
     return (
         <>
         <Header icon={iconProfile} iconReverse={iconReverseProfile} iconDescription={"Logo compte utilisateur"} title={"Mon profil"} hasMenu={true} role={userDetail?.roleName} userInfo={userDetail} />
-        <main className="flex flex-col items-center justify-center flex-1 p-10">
+        <main className="flex flex-col items-center justify-center flex-1 p-10 mb-20 overflow-auto">
             <Card>
                 <CardContent>
                     {message && <p className="text-green-500">{message}</p>}

@@ -60,7 +60,7 @@ const GetRecipe = () => {
     return (
         <>
          <Header icon={iconDetail} iconReverse={iconReverseDetail} iconDescription={"Logo détail du document"} title={`Recette ${detailRecipe.name}`} hasMenu={false} role="" />
-         <main className="flex flex-col flex-1 p-10 items-center mb-20">
+         <main className="flex flex-col flex-1 p-10 items-center mb-20 overflow-auto">
             <Card>
                 <CardTitle>
                     <ButtonLink source={"/web"} name={"Retour à la page d'accueil"} action={"Retour"} icon={iconReverseBackHome} iconReverse={iconBackHome} iconDescription={"Retour à la page d'accueil"}></ButtonLink>
