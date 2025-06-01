@@ -1,9 +1,9 @@
 import { DecodeUserResponse, UserResponse } from '@/types/definitions';
-import { jwtVerify, SignJWT } from 'jose'
+import { JWTPayload, jwtVerify, SignJWT } from 'jose'
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-export async function encrypt(payload: object) {
+export async function encrypt(payload: JWTPayload) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setExpirationTime('1d')

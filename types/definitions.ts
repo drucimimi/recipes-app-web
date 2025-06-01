@@ -33,3 +33,9 @@ export type PageRecipe = {
     totalPages:number,
     totalRecipes:number
 }
+
+export type CookiesProfileAndSession = {
+    pseudo:string,
+    avatar:string,
+    userDetail:UserResponse
+}

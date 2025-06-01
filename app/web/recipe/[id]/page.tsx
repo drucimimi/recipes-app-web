@@ -1,6 +1,4 @@
-"use client"
-import { Recipe, UserResponse } from "@/types/definitions"
-import { getCookie } from "cookies-next"
+import { Recipe } from "@/types/definitions"
 import iconDetail from "@/public/images/light/IconParkOutlineDocDetail.svg"
 import iconReverseDetail from "@/public/images/dark/IconParkOutlineDocDetail.svg"
 import Header from "@/components/header"
@@ -13,59 +11,45 @@ import { CustomDialog } from "@/components/custom-dialog"
 import { Button } from "@/components/ui/button"
 import { DialogClose } from "@/components/ui/dialog"
 import { apiRequest } from "@/services/httpCall"
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
-import HandSpinner from "@/components/ui/handSpinner"
+import { cookies } from "next/headers"
+import { decrypt } from "@/services/hashData"
+import { BtnConfirmDelete } from "@/components/btnConfirmDelete"
 
-const GetRecipe = () => {
-    const detailRecipeString = getCookie("recipe")
-    if(detailRecipeString == null){
-        return <p className="flex justify-center mt-40 text-lg">La recette demandée n'existe pas</p>
-    }
-    const router = useRouter()
-    const [userDetail, setUserDetail] = useState<UserResponse>({userId:"", profile:{id:"", pseudo:"", avatar:""}, token: "", roleName:""})
-    const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
-    useEffect( () => { 
-        async function fetchUser() {
-            setLoading(true)
-            try {
-                const res = await fetch('/api/user', { credentials: 'include' })
-                if (res.ok) {
-                    const data = await res.json()
-                    setUserDetail(data)
-                } else {
-                    setError(await res.text())
-                }
-            } catch (error) {
-                console.error(error)
-            }  finally {
-                setLoading(false);
+type PageProps = {
+  params: Promise<{ id: string }>;
+}
+
+const GetRecipe = async ({params}:PageProps) => {
+    const {id } = await params
+    let detailRecipe
+    // Récupération des détails de la recette
+    try {
+        const response = await apiRequest(`/recipes/${id}`, {headers: {'Content-Type': 'application/json'}})
+        if(response.ok){
+            const data = await response.json()
+            if(data.name == null){
+                return <p className="flex justify-center mt-40 text-lg">La recette demandée n'existe pas</p>
+            } else {
+                detailRecipe = data as Recipe
             }
         }
-        fetchUser()
-    }, [])
-    const detailRecipe:Recipe = detailRecipeString != null && JSON.parse(detailRecipeString)
-
-    const deleteRecipe = async () => {
-        const response = await apiRequest(`/recipes/${detailRecipe.id}`, {method:"DELETE", headers: {'Authorization': `Bearer ${userDetail.token}`}})
-        if(response.ok){
-            router.push("/web")
-        } else {
-            setError("Impossible de supprimer la recette")
-        }
+    } catch (error){
+        console.error(error)
     }
-    if (loading) return <HandSpinner />
+    const session = (await cookies()).get("session")?.value
+    const userInfo = session ? await decrypt(session) : null
+    const userDetail = userInfo?.userDetail
+    let error = ""
     return (
         <>
-         <Header icon={iconDetail} iconReverse={iconReverseDetail} iconDescription={"Logo détail du document"} title={`Recette ${detailRecipe.name}`} hasMenu={false} role="" />
+         <Header icon={iconDetail} iconReverse={iconReverseDetail} iconDescription={"Logo détail du document"} title={`Recette ${detailRecipe?.name}`} hasMenu={false} role="" />
          <main className="flex flex-col flex-1 p-10 items-center mb-20 overflow-auto">
             <Card>
                 <CardTitle>
                     <ButtonLink source={"/web"} name={"Retour à la page d'accueil"} action={"Retour"} icon={iconReverseBackHome} iconReverse={iconBackHome} iconDescription={"Retour à la page d'accueil"}></ButtonLink>
                 </CardTitle>
-                <CardContent>
+                { detailRecipe && <CardContent>
                     {error && <p className="text-red-500">{error}</p>}
                     <div className="space-y-2">
                         <Image src={detailRecipe.image.replace("10.0.2.2", "localhost")} alt={detailRecipe.name} width={200} height={200}/>
@@ -78,15 +62,15 @@ const GetRecipe = () => {
                     <div className="space-y-2">
                         <h2 className="text-xl">Ingrédients :</h2>
                         <ul>
-                            {detailRecipe.recipients.map((recipient) => (
-                                <li>{recipient}</li>
+                            {detailRecipe.recipients.map((recipient, index) => (
+                                <li key={index}>{recipient}</li>
                             ))}
                         </ul>
                     </div>
                     <div className="space-y-2">
                         <h2 className="text-xl">Instructions :</h2>
-                        {detailRecipe.instructions.split("\n").map( (instruction) => (
-                            <p>{instruction}</p>
+                        {detailRecipe.instructions.split("\n").map( (instruction, index) => (
+                            <p key={index}>{instruction}</p>
                         ))}
                     </div>
                     {detailRecipe.userId == userDetail?.userId && <div className="space-y-2">
@@ -94,8 +78,8 @@ const GetRecipe = () => {
                                 trigger={<Button variant="destructive">Supprimer la recette</Button>}
                                 title={`Supprimer la recette ${detailRecipe.name}`}
                                 footer={<div className="flex justify-end gap-2 w-full">
-                                <Button variant="destructive" onClick={deleteRecipe}>Oui</Button>
-                                <DialogClose>
+                                <BtnConfirmDelete id={id} error={error} userDetail={userDetail} />
+                                <DialogClose asChild>
                                     <Button variant="outline">Non</Button>
                                 </DialogClose>
                                 </div>}>
@@ -104,7 +88,7 @@ const GetRecipe = () => {
                                 </p>
                             </CustomDialog> 
                     </div>}
-                </CardContent>
+                </CardContent>}
             </Card>
          </main>
          <Footer />

@@ -20,8 +20,9 @@ export async function apiRequest(
   options: ApiRequestOptions = {},
   isFormData: boolean = false
 ): Promise<Response> {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "" 
   const { method = 'GET', body, headers } = options
-  const endpoint = 'https://recipes-api.webapps24.eu/api'+url
+  const endpoint = apiUrl+url
   const fetchOptions : RequestInit = {
     method,
     headers: {
@@ -30,6 +31,5 @@ export async function apiRequest(
     body : body ? isFormData ? body : JSON.stringify(body) : undefined,
   }
   const response = await fetch(endpoint, fetchOptions)
-  //response.json() || response.text()
   return response
 }

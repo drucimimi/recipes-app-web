@@ -36,7 +36,6 @@ type RecipeComponentProps = {
 const RecipeCard : React.FunctionComponent<RecipeComponentProps> = ({recipe}) => {
   const router = useRouter()
   const redirectToRecipePage = () => {
-    setCookie("recipe", JSON.stringify(recipe))
     router.push(`/web/recipe/${recipe.id}`)
   }
  return <div className={styles.card} key={recipe.id}>

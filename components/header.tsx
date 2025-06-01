@@ -4,12 +4,10 @@ import styles from '@/app/ui/styles/header.module.css'
 import Icon from '@/components/ui/icon'
 import Link from 'next/link'
 import { Button } from './ui/button'
-import { apiRequest } from '@/services/httpCall'
 import { usePathname, useRouter } from 'next/navigation'
 import { deleteSessionCookie } from '@/services/authProvider'
 import { UserResponse } from '@/types/definitions'
 import { deleteCookie } from 'cookies-next'
-import path from 'path'
 
 interface HeaderProps {
   icon:string,
@@ -25,9 +23,9 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
   const router = useRouter()
   const pathname = usePathname()
   const logout = async () => {
-    const response = await apiRequest(`/auth/logout`, { headers: {'Content-Type':'application/json', 'Authorization': `Bearer ${props.userInfo?.token}`}})
+    const response = await fetch('/api/logout')
     if(response.status == 200){
-      deleteSessionCookie()
+      await deleteSessionCookie()
       deleteCookie("pseudo")
       deleteCookie("avatar")
       deleteCookie("recipe")
@@ -41,10 +39,10 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
     }
   }
   return <header className={styles.header}>
-    <div className={styles.headerTitle}>
-        <Icon image={props.icon} description={props.iconDescription} imageReverse={props.iconReverse}/>
-        <h1>{props.title}</h1>
-    </div>
+    <Link href="/" className={styles.headerTitle}>
+      <Icon image={props.icon} description={props.iconDescription} imageReverse={props.iconReverse}/>
+      <h1>{props.title}</h1>
+    </Link>
     { props.hasMenu && <div>
       <ul className='flex flex-col md:flex-row gap-2 justify-center items-center'>
         <li>

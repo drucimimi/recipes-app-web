@@ -27,8 +27,7 @@ const Home = () => {
           Bienvenue sur <span className="text-green-500">Recipes App</span>
         </h1>
         <p className="mt-3 text-2xl light:text-gray-600 dark:text-white-600">
-          {/* Téléchargez notre application mobile dès maintenant ou voir la version web ci-dessous ! */}
-          Téléchargez notre application mobile dès maintenant !
+           Téléchargez notre application mobile dès maintenant ou voir la version web ci-dessous !
         </p>
         <div className="flex flex-col lg:flex-row gap-2">
           <ButtonLink source='/download/apk/recipes-app-2025.1.3.apk' name="Télécharger l'application Android" action='Télécharger' icon={iconAPK} iconReverse={iconAPKReverse} iconDescription='Icone Android' />
