@@ -17,7 +17,7 @@ import iconReverseResetPass from "@/public/images/dark/MaterialSymbolsLockReset.
 import Image from "next/image"
 import { CustomDialog } from "@/components/custom-dialog"
 import { DialogClose } from "@radix-ui/react-dialog"
-import { CookiesProfileAndSession, UserResponse } from "@/types/definitions"
+import { CookiesProfileAndSession } from "@/types/definitions"
 import { deleteSessionCookie } from "@/services/authProvider"
 import { deleteCookie, getCookie, setCookie } from "cookies-next"
 
@@ -26,6 +26,12 @@ interface ProfileFormData {
   pseudo: string
 }
 
+/** 
+ * @param pseudo
+ * @param avatar
+ * @param userDetail
+ * @description Composant client pour la page du profil utilisateur
+*/
 export const ProfileForm = ({pseudo, avatar, userDetail}:CookiesProfileAndSession) => {
     const router = useRouter()
     const message = getCookie("message") || null
@@ -88,7 +94,7 @@ export const ProfileForm = ({pseudo, avatar, userDetail}:CookiesProfileAndSessio
     const deleteAccount = async () => {
         const response = await apiRequest(`/user/${userDetail?.userId}`, { method: 'DELETE', headers: {'Content-Type':'application/json', 'Authorization': `Bearer ${userDetail?.token}`}})
         if(response.status == 200){
-            deleteSessionCookie()
+            await deleteSessionCookie()
             deleteCookie("pseudo")
             deleteCookie("avatar")
             deleteCookie("recipe")

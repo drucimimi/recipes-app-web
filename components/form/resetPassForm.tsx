@@ -21,6 +21,10 @@ interface ResetPassFormData {
   password: string
 }
 
+/** 
+ * @param userDetail
+ * @description Composant client pour la page de réinitilalisation de mot de passe
+*/
 export const ResetPassForm = ({userDetail}:{userDetail:UserResponse}) => {
     const router = useRouter()
     const userId = userDetail.userId

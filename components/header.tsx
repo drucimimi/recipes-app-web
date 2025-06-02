@@ -19,6 +19,33 @@ interface HeaderProps {
   userInfo?:UserResponse|null
 }
 
+/**
+ * 
+ * @param props - {icon, iconReverse, iconDescription, title, hasMenu, role, userInfo }
+ * permet d'afficher le header avec des propriétés différentes selon les pages
+ * @example
+ * ```
+   const session = (await cookies.get('session))?.value
+   const sessionInfo = session ? await decrypt(session) : null
+   const userDetail = sessionInfo?.userDetail
+    // Si pas de menu sur la page et user non connecté
+    return (
+        <Header icon={iconSVG} icon={iconReverseSVG} iconDescription={'icone description'} title={'titre du header'} hasMenu=false role={''} />
+    )
+    // Si menu sur la page et user connecté
+    return (
+        <Header icon={iconSVG} icon={iconReverseSVG} iconDescription={'icone description'} title={'titre du header'} hasMenu=false role={userDetail.role} userDetail={userDetail} />
+    )
+    // Si pas de menu sur la page et user connecté
+    return (
+        <Header icon={iconSVG} icon={iconReverseSVG} iconDescription={'icone description'} title={'titre du header'} hasMenu=false role={userDetail.role} userDetail={userDetail} />
+    )
+    // Si menu sur la page et user connecté
+    return (
+        <Header icon={iconSVG} icon={iconReverseSVG} iconDescription={'icone description'} title={'titre du header'} hasMenu=true role={userDetail.role} userDetail={userDetail} />
+    )
+    ```
+ */
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
   const router = useRouter()
   const pathname = usePathname()

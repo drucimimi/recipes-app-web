@@ -4,6 +4,15 @@ import Form from "next/form"
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 
+/**
+ * 
+ * @param currentPage
+ * @description permet de rechercher une recette via son nom
+ * @example
+ * ```
+    return ( <SearchForm currentPage={1} /> )
+    ```
+ */
 const SearchForm = ({currentPage}:{currentPage:number}) => {
     return <Form action={"/web"} className="flex gap-2 my-2">
         <div className="relative flex-1">

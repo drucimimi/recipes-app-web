@@ -2,6 +2,14 @@ import * as React from 'react'
 import styles from '@/app/ui/styles/footer.module.css'
 import Link from 'next/link'
 
+/**
+ * 
+ * @description permet d'afficher le meme footer sur toutes les pages
+ * @example
+ * ```
+     return ( <Footer /> )
+    ```
+ */
 const Footer: React.FunctionComponent = () => {
   const year = new Date().getFullYear()
   return <footer className={styles.footer}>

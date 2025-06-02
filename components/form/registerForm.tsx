@@ -27,6 +27,9 @@ interface RegisterFormData {
   acceptCgu: boolean
 }
 
+/** 
+ * @description Composant client pour la page d'inscription de compte utilisateur
+*/
 export const RegisterForm = () => {
     const router = useRouter()
     const MATOMO_URL = process.env.MATOMO_URL || "https://matomo.webapps24.eu"
@@ -88,7 +91,7 @@ export const RegisterForm = () => {
     return (
         <>
         <Header icon={iconRegister} iconReverse={iconReverseRegister} iconDescription={"Logo inscription"} title={"Inscription"} hasMenu={false} role={""} />
-        <main className="flex flex-col items-center justify-center flex-1 p-10 overflow-auto">
+        <main className="flex flex-col items-center justify-center flex-1 p-10 overflow-auto mb-10">
             <Card>
                 <CardHeader>
                     <CardTitle><ButtonLink source={"/web/login"} name={"Retour à la page de connexion"} action={"Retour"} icon={iconReverseBackLogin} iconReverse={iconBackLogin} iconDescription={"Retour à la page de connexion"}></ButtonLink></CardTitle>

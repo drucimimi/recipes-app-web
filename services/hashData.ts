@@ -3,6 +3,11 @@ import { JWTPayload, jwtVerify, SignJWT } from 'jose'
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
+/**
+ * 
+ * @param payload
+ * @description permet de chiffer une information avec un token JWT
+ */
 export async function encrypt(payload: JWTPayload) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
@@ -10,6 +15,11 @@ export async function encrypt(payload: JWTPayload) {
     .sign(secret)
 }
 
+/**
+ * 
+ * @param token
+ * @description permet de déchiffer une information avec un token JWT
+ */
 export async function decrypt(token: string) {
   try {
     const { payload } = await jwtVerify(token, secret)

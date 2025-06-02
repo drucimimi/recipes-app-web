@@ -3,7 +3,7 @@ import Header from "@/components/header"
 import { apiRequest } from "@/services/httpCall"
 import { UserResponse } from "@/types/definitions"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import iconAdd from "@/public/images/light/MaterialSymbolsAddCircle.svg"
 import iconReverseAdd from "@/public/images/dark/MaterialSymbolsAddCircle.svg"
 import Footer from "@/components/footer"
@@ -16,7 +16,6 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Upload } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
-import HandSpinner from "@/components/ui/handSpinner"
 
 interface RecipeFormData {
   name: string
@@ -26,6 +25,10 @@ interface RecipeFormData {
   image: any
 }
 
+/** 
+ * @param userDetail
+ * @description Composant client pour la page de création de recette
+*/
 export const CreateRecipeForm = ({userDetail}:{userDetail:UserResponse}) => {
     const router = useRouter()
     const [error, setError] = useState("")

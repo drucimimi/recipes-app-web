@@ -2,7 +2,6 @@
 import styles from '@/app/ui/styles/card.module.css'
 import Image from 'next/image'
 import { Button } from "./ui/button"
-import { setCookie } from "cookies-next"
 import { useRouter } from "next/navigation"
 import { Recipe } from '@/types/definitions'
 
@@ -13,6 +12,7 @@ type RecipeComponentProps = {
 /**
  * 
  * @param recipe
+ * @description permet d'afficher sous forme de card les informations clés d'une recette
  * @example
  * ```
  * const response = await apiRequest('/recipes', {headers:{'Content-Type':'application/json'}})
@@ -24,7 +24,7 @@ type RecipeComponentProps = {
   if(response.status == 200){
     result = await response.json()
   } else {
-    console.log(response.statusText)
+    console.error(response.statusText)
   }
     return (
         { result.recipesData ? result.recipesData.map( recipe => (

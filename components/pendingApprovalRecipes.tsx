@@ -10,9 +10,32 @@ import Icon from "@/components/ui/icon"
 import { Recipe, UserResponse } from "@/types/definitions"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { setCookie } from "cookies-next"
 import { apiRequest } from "@/services/httpCall"
 
+/**
+ * 
+ * @param recipe
+ * @param userDetail
+ * @description permet d'afficher sous forme d'élément de liste les infos clé d'une recette en cours d'approbation
+ * @example
+ * ```
+  const session = (await cookies.get('session))?.value
+  const sessionInfo = session ? await decrypt(session) : null
+  const userDetail = sessionInfo?.userDetail
+  const response = await apiRequest('/admin/recipes', {headers:{'Content-Type':'application/json', 'Authorization': 'Bearer tokenAdmin....'}})
+  let recipesData :Recipe[] = []
+  if(response.status == 200){
+    recipesData = await response.json()
+  } else {
+    console.error(response.statusText)
+  }
+    return (
+        { userDetail && recipesData ? recipesData.map( recipe => (
+            <PendingApprovalRecipes recipe={recipe} userDetail={userDetail} />
+        )) : null}
+    )
+    ```
+ */
  export const PendingApprovalRecipes = ({recipe, userDetail}:{recipe:Recipe, userDetail:UserResponse}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
@@ -41,7 +64,7 @@ import { apiRequest } from "@/services/httpCall"
     }
     return (
         <>
-        <p>{error}</p>
+        <p className="text-red-500">{error}</p>
         <div className="flex flex-wrap gap-2 items-center mt-2">
             <p>{recipe.name}</p>
             <Button type="button" onClick={() => redirectToRecipePage(recipe)}><Icon image={iconEye} imageReverse={iconReverseEye} description={"icone de visibilité"} /></Button>

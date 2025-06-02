@@ -7,7 +7,7 @@ interface ApiRequestOptions {
 }
 
 /**
- * Effectue une requête HTTP vers mon API REST de recettes.
+ * @description Effectue une requête HTTP vers mon API REST de recettes.
  * @param url L'url d'une route API.
  * @param options Les options de la requête (méthode, body, headers).
  * @param isFormData permet de savoir si on envoie un fichier lors de la soumission du formulaire

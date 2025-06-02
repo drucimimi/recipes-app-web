@@ -23,6 +23,9 @@ interface LoginFormData {
   password: string
 }
 
+/** 
+ * @description Composant client pour la page de connexion de compte utilisateur
+*/
 export const LoginForm = () => {
     const router = useRouter()
     const MATOMO_URL = process.env.MATOMO_URL || "https://matomo.webapps24.eu"

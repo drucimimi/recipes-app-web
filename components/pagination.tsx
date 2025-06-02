@@ -4,6 +4,15 @@ import { Button } from "./ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 
+/**
+ * 
+ * @param totalPages
+ * @description permet de créer une pagination sur plusieurs éléments (ex: 10 éléments par page)
+ * @example
+ * ```
+     return ( <Pagination totalPages={2} /> )
+    ```
+ */
 const Pagination = ({totalPages}:{totalPages:number}) => {
     const urlParams = useSearchParams()
     const currentPage = urlParams.get("page") ? Number(urlParams.get("page")) : 0
