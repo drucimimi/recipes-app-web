@@ -50,7 +50,7 @@ import { apiRequest } from "@/services/httpCall"
             await apiRequest(`/admin/recipes/${recipeId}/status`, {method: 'PATCH', headers: {'Authorization': `Bearer ${userDetail?.token}`}})
             : await apiRequest(`/admin/recipes/${recipeId}/status`, {method: 'DELETE', headers: {'Authorization': `Bearer ${userDetail?.token}`}})
         if(response.ok){
-            router.push(`/web`)
+            router.refresh()
         } else if(response.status == 404){
             setError(await response.text())
             setIsLoading(false)

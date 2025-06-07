@@ -41,13 +41,15 @@ const GetRecipe = async ({params}:PageProps) => {
     const userInfo = session ? await decrypt(session) : null
     const userDetail = userInfo?.userDetail
     let error = ""
+    let backUrl = userDetail?.roleName == "ADMIN" && detailRecipe?.status == "PendingApproval" ? "/web/protected/admin" : "/web"
+    let backBtnName = userDetail?.roleName == "ADMIN" && detailRecipe?.status == "PendingApproval" ? "Retour à la page d'administration" : "Retour à la page d'accueil"
     return (
         <>
          <Header icon={iconDetail} iconReverse={iconReverseDetail} iconDescription={"Logo détail du document"} title={`Recette ${detailRecipe?.name}`} hasMenu={false} role="" />
          <main className="flex flex-col flex-1 p-10 items-center mb-20 overflow-auto">
             <Card>
                 <CardTitle>
-                    <ButtonLink source={"/web"} name={"Retour à la page d'accueil"} action={"Retour"} icon={iconReverseBackHome} iconReverse={iconBackHome} iconDescription={"Retour à la page d'accueil"}></ButtonLink>
+                    <ButtonLink source={backUrl} name={backBtnName} action={"Retour"} icon={iconReverseBackHome} iconReverse={iconBackHome} iconDescription={backBtnName}></ButtonLink>
                 </CardTitle>
                 { detailRecipe && <CardContent>
                     {error && <p className="text-red-500">{error}</p>}
