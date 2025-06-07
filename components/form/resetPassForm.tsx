@@ -71,7 +71,7 @@ export const ResetPassForm = ({userDetail}:{userDetail:UserResponse}) => {
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit} className="space-y-6 my-4">
-                        {error && <p className="text-red-500">{error}</p>}
+                        {error && <p style={{color: "#830B0B"}}>{error}</p>}
                         {/* Email */}
                         <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
@@ -99,7 +99,7 @@ export const ResetPassForm = ({userDetail}:{userDetail:UserResponse}) => {
                         </div>
                         
                         {/* Submit Button */}
-                        <Button type="submit" className="bg-green-100 text-green-500" disabled={isLoading}>
+                        <Button type="submit" className="bg-green-100" style={{color: "#0D4A23"}} disabled={isLoading}>
                             Changer
                         </Button>
                     </form>

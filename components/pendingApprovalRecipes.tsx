@@ -64,7 +64,7 @@ import { apiRequest } from "@/services/httpCall"
     }
     return (
         <>
-        <p className="text-red-500">{error}</p>
+        {error && <p style={{color: "#F69C9C"}}>{error}</p>}
         <div className="flex flex-wrap gap-2 items-center mt-2">
             <p>{recipe.name}</p>
             <Button type="button" onClick={() => redirectToRecipePage(recipe)}><Icon image={iconEye} imageReverse={iconReverseEye} description={"icone de visibilité"} /></Button>

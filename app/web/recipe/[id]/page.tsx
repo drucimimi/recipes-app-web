@@ -52,7 +52,7 @@ const GetRecipe = async ({params}:PageProps) => {
                     <ButtonLink source={backUrl} name={backBtnName} action={"Retour"} icon={iconReverseBackHome} iconReverse={iconBackHome} iconDescription={backBtnName}></ButtonLink>
                 </CardTitle>
                 { detailRecipe && <CardContent>
-                    {error && <p className="text-red-500">{error}</p>}
+                    {error && <p style={{color: "#830B0B"}}>{error}</p>}
                     <div className="space-y-2">
                         <Image src={detailRecipe.image.replace("10.0.2.2", "localhost")} alt={detailRecipe.name} width={200} height={200}/>
                     </div>
@@ -77,7 +77,7 @@ const GetRecipe = async ({params}:PageProps) => {
                     </div>
                     {detailRecipe.userId == userDetail?.userId && <div className="space-y-2">
                         <CustomDialog
-                                trigger={<Button variant="destructive">Supprimer la recette</Button>}
+                                trigger={<Button variant="destructive" style={{backgroundColor:"#830B0B", color: "FFFFFF"}}>Supprimer la recette</Button>}
                                 title={`Supprimer la recette ${detailRecipe.name}`}
                                 footer={<div className="flex justify-end gap-2 w-full">
                                 <BtnConfirmDelete id={id} error={error} userDetail={userDetail} />

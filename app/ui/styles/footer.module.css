@@ -1,5 +1,6 @@
 .footer{
-    @apply fixed bottom-0 w-full flex flex-col gap-2 items-center bg-green-500 p-2;
+    @apply fixed bottom-0 w-full flex flex-col gap-2 items-center p-2;
+    background-color: #0D4A2F;
 }
 .contentinfo{
     @apply flex flex-col md:flex-row gap-2

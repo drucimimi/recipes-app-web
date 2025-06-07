@@ -109,10 +109,10 @@ export const ProfileForm = ({pseudo, avatar, userDetail}:CookiesProfileAndSessio
         <main className="flex flex-col items-center justify-center flex-1 p-10 mb-20 overflow-auto">
             <Card>
                 <CardContent>
-                    {message && <p className="text-green-500">{message}</p>}
+                    {message && <p style={{color: "#0D4A23"}}>{message}</p>}
                     <form onSubmit={handleSubmit} className="space-y-6 my-4">
                         {success && <p className="text-green-500">{success}</p>}
-                        {error && <p className="text-red-500">{error}</p>}
+                        {error && <p style={{color: "#830B0B"}}>{error}</p>}
                         {/* Avatar */}
                         <div className="space-y-2">
                             <Label htmlFor="avatar">Avatar</Label>
@@ -140,16 +140,16 @@ export const ProfileForm = ({pseudo, avatar, userDetail}:CookiesProfileAndSessio
                         </div>
                         
                         {/* Submit Button */}
-                        <Button type="submit" className="bg-green-100 text-green-500" disabled={isLoading}>
+                        <Button type="submit" className="bg-green-100" style={{color: "#0D4A23"}} disabled={isLoading}>
                             Enregistrer
                         </Button>
                     </form>
                     <ButtonLink source={"/web/protected/resetPassword"} name={"Changer le mot de passe"} action={"Changer"} icon={iconReverseResetPass} iconReverse={iconResetPass} iconDescription={"Logo réinitialisation"}></ButtonLink>
                     <CustomDialog
-                        trigger={<Button variant="destructive">Supprimer le compte</Button>}
+                        trigger={<Button variant="destructive" style={{backgroundColor:"#830B0B", color: "FFFFFF"}}>Supprimer le compte</Button>}
                         title="Suppression du compte"
                         footer={<div className="flex justify-end gap-2 w-full">
-                        <Button variant="destructive" onClick={deleteAccount}>Oui</Button>
+                        <Button variant="destructive" style={{backgroundColor:"#830B0B", color: "FFFFFF"}} onClick={deleteAccount}>Oui</Button>
                         <DialogClose asChild>
                             <Button variant="outline">Non</Button>
                         </DialogClose>

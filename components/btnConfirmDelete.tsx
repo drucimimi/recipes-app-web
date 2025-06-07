@@ -28,6 +28,6 @@ export const BtnConfirmDelete = ({id, error, userDetail}:{id:string, error:strin
         }
     }
     return (
-        <Button variant="destructive" onClick={deleteRecipe}>Oui</Button>
+        <Button variant="destructive" style={{backgroundColor:"#830B0B", color: "FFFFFF"}} onClick={deleteRecipe}>Oui</Button>
     )
 }

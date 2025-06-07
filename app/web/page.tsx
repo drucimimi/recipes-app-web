@@ -56,7 +56,7 @@ const HomeWeb = async ({searchParams}:PageProps) => {
                     <ButtonLink source={"/web/protected/createRecipe"} name={"Ajouter une recette"} action={"Ajouter"} icon={iconAdd} iconReverse={iconReverseAdd} iconDescription={"icone ajout"} />
                 </div>}
                 {filteredRecipes.length == 0 && <p className="flex flex-1 justify-center p-40 text-xl">Aucune recette trouvée</p>}
-                {error && <p className="text-red-500">{error}</p>}
+                {error && <p style={{color: "#F69C9C"}}>{error}</p>}
                 {filteredRecipes.length > 0 && <>
                     {/* Barre de recherche */}
                     <SearchForm currentPage={currentPage} />

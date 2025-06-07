@@ -17,6 +17,7 @@ import { deleteCookie, getCookie } from "cookies-next"
 import iconLogin from "@/public/images/light/MaterialSymbolsLogin.svg"
 import iconReverseLogin from "@/public/images/dark/MaterialSymbolsLogin.svg"
 import { createSession } from "@/services/authProvider"
+import styles from "@/app/ui/styles/loginForm.module.css"
 
 interface LoginFormData {
   email: string
@@ -82,9 +83,9 @@ export const LoginForm = () => {
                     <CardTitle><ButtonLink source={"/web"} name={"Retour à la page d'accueil"} action={"Retour"} icon={iconReverseBackHome} iconReverse={iconBackHome} iconDescription={"Retour à la page d'accueil"}></ButtonLink></CardTitle>
                 </CardHeader>
                 <CardContent>
-                    {message && <p className="text-green-500">{message}</p>}
+                    {message && <p style={{color: "#0D4A23"}}>{message}</p>}
                     <form onSubmit={handleSubmit} className="space-y-6 my-4">
-                        {error && <p className="text-red-500">{error}</p>}
+                        {error && <p style={{color: "#830B0B"}}>{error}</p>}
                         {/* Email */}
                         <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
@@ -112,11 +113,11 @@ export const LoginForm = () => {
                         </div>
                         
                         {/* Submit Button */}
-                        <Button type="submit" className="bg-green-100 text-green-500" disabled={isLoading}>
+                        <Button type="submit" className={styles.loginFormBtn} disabled={isLoading}>
                             Se connecter
                         </Button>
                     </form>
-                    <Link href={"/web/register"} className="text-green-500 underline">Créer un compte</Link>
+                    <Link href={"/web/register"} className={styles.loginFormLink}>Créer un compte</Link>
                 </CardContent>
             </Card>
         </main>

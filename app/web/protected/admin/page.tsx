@@ -34,7 +34,7 @@ const Admin = async () => {
             {recipes.length == 0 && <p className="flex flex-1 justify-center p-40 text-xl">Aucune recette en cours d'approbation</p>}
             {recipes.length > 0 && <>
                 <h1>Liste des recettes en cours d'approbation</h1>
-                {error && <p className="text-red-500">{error}</p>}
+                {error && <p style={{color: "#F69C9C"}}>{error}</p>}
                 <div className="flex flex-col gap-2">
                     { recipes.map( (recipe) => (
                         <PendingApprovalRecipes recipe={recipe} userDetail={userDetail} key={recipe.id} />
