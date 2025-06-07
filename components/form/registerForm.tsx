@@ -18,6 +18,7 @@ import iconReverseBackLogin from "@/public/images/dark/MaterialSymbolsArrowBack.
 import { apiRequest } from "@/services/httpCall"
 import { useRouter } from "next/navigation"
 import { setCookie } from "cookies-next"
+import styles from "@/app/ui/styles/registerForm.module.css"
 
 interface RegisterFormData {
   avatar: any
@@ -97,9 +98,9 @@ export const RegisterForm = () => {
                     <CardTitle><ButtonLink source={"/web/login"} name={"Retour à la page de connexion"} action={"Retour"} icon={iconReverseBackLogin} iconReverse={iconBackLogin} iconDescription={"Retour à la page de connexion"}></ButtonLink></CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <Link href={"/web/cgu"} className="mx-32 text-green-500 underline">Voir les conditions d'utilisation</Link>
+                    <Link href={"/web/cgu"} className={styles.registerFormLink}>Voir les conditions d'utilisation</Link>
                     <form onSubmit={handleSubmit} className="space-y-6 mt-4" encType="multipart/form-data">
-                        {error && <p className="text-red-500">{error}</p>}
+                        {error && <p style={{color: "#830B0B"}}>{error}</p>}
                     {/* Avatar */}
                         <div className="space-y-2">
                             <Label htmlFor="avatar">Avatar</Label>
@@ -169,7 +170,7 @@ export const RegisterForm = () => {
                         </div>
 
                         {/* Submit Button */}
-                        <Button type="submit" className="bg-green-100 text-green-500" disabled={isLoading}>
+                        <Button type="submit" className={styles.registerFormBtn} disabled={isLoading}>
                             S'inscrire
                         </Button>
                     </form>

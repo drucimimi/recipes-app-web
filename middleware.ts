@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self'",
-  `connect-src 'self' ${appHost} ${apiHost}`,
+  `connect-src 'self' https://matomo.webapps24.eu ${appHost} ${apiHost}`,
   "object-src 'none'",
   "frame-ancestors 'none'",
   "base-uri 'self'",

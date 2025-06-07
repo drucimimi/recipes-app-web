@@ -1,5 +1,6 @@
 .header{
-    @apply sticky top-0 flex flex-col gap-2 bg-green-500 p-2 z-10;
+    @apply sticky top-0 flex flex-col gap-2 p-2 z-10;
+    background-color: #0D4A2F;
 }
 .headerTitle{
     @apply flex self-center gap-2;

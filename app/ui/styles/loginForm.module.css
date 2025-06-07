@@ -1,0 +1,8 @@
+.loginFormBtn {
+    @apply bg-green-100;
+    color: #0D4A23;
+}
+.loginFormLink {
+    @apply underline;
+    color: #0D4A23;
+}

@@ -3,6 +3,7 @@
 import { Button } from "./ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
+import styles from '@/app/ui/styles/pagination.module.css'
 
 /**
  * 
@@ -43,7 +44,7 @@ const Pagination = ({totalPages}:{totalPages:number}) => {
                     Précédent
                 </Button>
 
-                <span className="text-sm text-gray-600">
+                <span className={styles.paginationTitle}>
                     Page {currentPage + 1} sur {totalPages}
                 </span>
 
