@@ -1,2 +1,5 @@
-Contact: drucilladeroche@proton.me
-Expires: 2126-01-01T00:00:00.000Z
+Contact: mailto:drucilladeroche@proton.me
+Expires: 2126-06-06T22:00:00.000Z
+Encryption: https://recipes-app.webapps24.eu/.well-known/pgp-key.txt
+Preferred-Languages: fr
+Canonical: https://recipes-app.webapps24.eu/.well-known/security.txt
