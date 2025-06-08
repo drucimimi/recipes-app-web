@@ -1,8 +1,0 @@
-.registerFormBtn {
-    @apply bg-green-100;
-    color: #0D4A23;
-}
-.registerFormLink {
-    @apply mx-32 underline;
-    color: #0D4A23;
-}

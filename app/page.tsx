@@ -22,7 +22,7 @@ const Home = () => {
     return (
     <>
       <Header icon={logo} iconReverse={logoReverse} iconDescription={"Logo Recipes App"} title={"Recipes App"} hasMenu={false} role={""} />
-      <main className="flex flex-col items-center justify-center flex-1 px-20 py-10 text-center">
+      <main className="flex flex-col items-center justify-center flex-1 px-20 pt-10 pb-36 text-center">
         <h1 className="text-6xl font-bold light:text-gray-800 dark:text-white-800">
           Bienvenue sur <span className="text-green-500">Recipes App</span>
         </h1>

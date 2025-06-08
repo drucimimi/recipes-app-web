@@ -1,6 +1,6 @@
 "use client"
 import { redirect } from "next/navigation"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
 import { apiRequest } from "@/services/httpCall"
 import { UserResponse } from "@/types/definitions"
 /**

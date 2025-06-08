@@ -10,7 +10,7 @@ const CGU = () => {
     return (
         <>
             <Header icon={iconContract} iconReverse={iconReverseContract} iconDescription={"icone de contrat"} title={"Conditions générales d'utilisation"} hasMenu={false} role={""} />
-            <main className="flex flex-col flex-1 p-10 mb-20 gap-2">
+            <main className="flex flex-col flex-1 px-10 pt-10 pb-36 mb-20 gap-2">
                 <ButtonLink source={"/web"} name={"Retour à la page d'accueil"} action={"Retour"} icon={iconBackHome} iconReverse={iconReverseBackHome} iconDescription={"Retour à la page d'accueil"}></ButtonLink>
                 <h1>Article 1 : Objet</h1>
                 <p>Les présentes CGU ou Conditions Générales d’Utilisation encadrent juridiquement l’utilisation des services du site et de l'application Recipes App (ci-après dénommé « le site »). Constituant le contrat entre le propriétaire du site et de l'application Recipes App, l’Utilisateur, l’accès au site et à l'application doit être précédé de l’acceptation de ces CGU. L’accès à cette plateforme signifie l’acceptation des présentes CGU.</p>

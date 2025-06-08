@@ -1,8 +1,8 @@
 "use client"
 import { Search } from "lucide-react"
 import Form from "next/form"
-import { Input } from "./ui/input"
-import { Button } from "./ui/button"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
 
 /**
  * 

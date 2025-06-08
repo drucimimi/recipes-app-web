@@ -76,16 +76,14 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
           <Link href="/web">Accueil</Link>
         </li>
         {props.role == "ADMIN" || props.role == "USER" ? <li>
-          <details className='cursor-pointer'>
-            <summary><Link href="/web/protected/profile">Mon Profil</Link></summary>
-            <Button type="button" onClick={logout} className="bg-transparent">Déconnexion</Button>
-          </details>
+          <Link href="/web/protected/profile">Mon Profil</Link>
         </li> : <li>
           <Link href="/web/login">Connexion</Link>
         </li>}
         {props.role == "ADMIN" && <li>
           <Link href="/web/protected/admin">Administration</Link>
         </li>}
+        {props.role == "ADMIN" || props.role == "USER" ? <li><Button type="button" onClick={logout} className="bg-transparent text-base">Déconnexion</Button></li> : null}
       </ul>
     </div>}
   </header>

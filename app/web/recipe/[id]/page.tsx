@@ -14,7 +14,7 @@ import { apiRequest } from "@/services/httpCall"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import { cookies } from "next/headers"
 import { decrypt } from "@/services/hashData"
-import { BtnConfirmDelete } from "@/components/btnConfirmDelete"
+import { BtnConfirmDelete } from "@/components/ui/btnConfirmDelete"
 
 type PageProps = {
   params: Promise<{ id: string }>;

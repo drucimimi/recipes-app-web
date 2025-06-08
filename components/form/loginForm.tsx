@@ -1,23 +1,13 @@
 "use client"
-import Footer from "@/components/footer"
-import Header from "@/components/header"
-import ButtonLink from "@/components/ui/buttonLink"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useRouter } from "next/navigation"
-import iconBackHome from "@/public/images/light/MaterialSymbolsArrowBack.svg"
-import iconReverseBackHome from "@/public/images/dark/MaterialSymbolsArrowBack.svg"
 import { useEffect, useState } from "react"
 import init from "@socialgouv/matomo-next"
-import Link from "next/link"
 import { apiRequest } from "@/services/httpCall"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { deleteCookie, getCookie } from "cookies-next"
-import iconLogin from "@/public/images/light/MaterialSymbolsLogin.svg"
-import iconReverseLogin from "@/public/images/dark/MaterialSymbolsLogin.svg"
 import { createSession } from "@/services/authProvider"
-import styles from "@/app/ui/styles/loginForm.module.css"
 
 interface LoginFormData {
   email: string
@@ -76,52 +66,40 @@ export const LoginForm = () => {
     }
     return(
         <>
-        <Header icon={iconLogin} iconReverse={iconReverseLogin} iconDescription={"Logo connexion"} title={"Connexion"} hasMenu={false} role={""} />
-        <main className="flex flex-col items-center justify-center flex-1 p-10">
-            <Card>
-                <CardHeader>
-                    <CardTitle><ButtonLink source={"/web"} name={"Retour à la page d'accueil"} action={"Retour"} icon={iconReverseBackHome} iconReverse={iconBackHome} iconDescription={"Retour à la page d'accueil"}></ButtonLink></CardTitle>
-                </CardHeader>
-                <CardContent>
-                    {message && <p style={{color: "#0D4A23"}}>{message}</p>}
-                    <form onSubmit={handleSubmit} className="space-y-6 my-4">
-                        {error && <p style={{color: "#830B0B"}}>{error}</p>}
-                        {/* Email */}
-                        <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                            id="email"
-                            type="email"
-                            placeholder="Saisir votre email"
-                            value={formData.email}
-                            onChange={(e) => handleInputChange("email", e.target.value)}
-                            required
-                            />
-                        </div>
+        {message && <p style={{color: "#0D4A23"}}>{message}</p>}
+        <form onSubmit={handleSubmit} className="space-y-6 my-4">
+            {error && <p style={{color: "#830B0B"}}>{error}</p>}
+            {/* Email */}
+            <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                id="email"
+                type="email"
+                placeholder="Saisir votre email"
+                value={formData.email}
+                onChange={(e) => handleInputChange("email", e.target.value)}
+                required
+                />
+            </div>
 
-                        {/* Mot de passe */}
-                        <div className="space-y-2">
-                            <Label htmlFor="password">Mot de passe</Label>
-                            <Input
-                            id="password"
-                            type="password"
-                            placeholder="Saisir votre mot de passe"
-                            value={formData.password}
-                            onChange={(e) => handleInputChange("password", e.target.value)}
-                            required
-                            />
-                        </div>
-                        
-                        {/* Submit Button */}
-                        <Button type="submit" className={styles.loginFormBtn} disabled={isLoading}>
-                            Se connecter
-                        </Button>
-                    </form>
-                    <Link href={"/web/register"} className={styles.loginFormLink}>Créer un compte</Link>
-                </CardContent>
-            </Card>
-        </main>
-        <Footer />
+            {/* Mot de passe */}
+            <div className="space-y-2">
+                <Label htmlFor="password">Mot de passe</Label>
+                <Input
+                id="password"
+                type="password"
+                placeholder="Saisir votre mot de passe"
+                value={formData.password}
+                onChange={(e) => handleInputChange("password", e.target.value)}
+                required
+                />
+            </div>
+            
+            {/* Submit Button */}
+            <Button type="submit" className={"bg-green-100"} style={{color:"#0D4A23"}} disabled={isLoading}>
+                Se connecter
+            </Button>
+        </form>
         </>
     )
 } 

@@ -9,7 +9,7 @@ import iconAdd from '@/public/images/light/MaterialSymbolsAddCircle.svg'
 import iconReverseAdd from '@/public/images/dark/MaterialSymbolsAddCircle.svg'
 import RecipeCard from "@/components/recipeCard"
 import { cookies } from "next/headers"
-import SearchForm from "@/components/searchForm"
+import SearchForm from "@/components/form/searchForm"
 import Pagination from "@/components/pagination"
 import { decrypt } from "@/services/hashData"
 

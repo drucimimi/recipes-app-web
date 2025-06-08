@@ -17,17 +17,18 @@ import styles from '@/app/ui/styles/pagination.module.css'
 const Pagination = ({totalPages}:{totalPages:number}) => {
     const urlParams = useSearchParams()
     const currentPage = urlParams.get("page") ? Number(urlParams.get("page")) : 0
+    const query = urlParams.get("query") ? urlParams.get("query") : ""
     const router = useRouter()
     const goToPreviousPage = () => {
         if (currentPage > 0) {
             const newPage = currentPage - 1
-            router.push(`/web?page=${newPage}`)
+            query != "" ? router.push(`/web?page=${newPage}&query=${query}`) :router.push(`/web?page=${newPage}`)
         }
     }
     const goToNextPage = () => {
         if (currentPage < totalPages - 1) {
             const newPage = currentPage + 1
-            router.push(`/web?page=${newPage}`)
+            query != "" ? router.push(`/web?page=${newPage}&query=${query}`) :router.push(`/web?page=${newPage}`)
         }
     }
     return (
