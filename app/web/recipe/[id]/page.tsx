@@ -59,6 +59,7 @@ const GetRecipe = async ({params}:PageProps) => {
                     <div className="space-y-2">
                         <h1 className="text-2xl">{detailRecipe.name}</h1>
                         <p>Durée : {detailRecipe.durationFormatted}</p>
+                        <p>Pour {detailRecipe.portion} personne(s)</p>
                         <p>Créée par {detailRecipe.author} le {detailRecipe.createdDate}</p>
                     </div>
                     <div className="space-y-2">

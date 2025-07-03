@@ -19,6 +19,7 @@ export type Recipe = {
     name:string,
     duration:string,
     durationFormatted:string,
+    portion:number,
     image:string,
     recipients:string[],
     instructions:string,

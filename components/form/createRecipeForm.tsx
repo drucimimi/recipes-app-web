@@ -23,6 +23,7 @@ interface RecipeFormData {
   recipients: string
   instructions: string
   image: any
+  portion:number
 }
 
 /** 
@@ -37,7 +38,8 @@ export const CreateRecipeForm = ({userDetail}:{userDetail:UserResponse}) => {
         duration: "00:30:00",
         recipients: "Ingrédient1\nIngrédient2\nIngrédient3",
         instructions: "Instruction1\nInstruction2\nInstruction3",
-        image: null
+        image: null,
+        portion: 1
     })
     const [isLoading, setIsLoading] = useState(false)
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +58,7 @@ export const CreateRecipeForm = ({userDetail}:{userDetail:UserResponse}) => {
         formRecipeData.append("duration", formData.duration)
         formRecipeData.append("recipients", formData.recipients)
         formRecipeData.append("instructions", formData.instructions)
+        formRecipeData.append("portion", formData.portion.toString())
         if(formData.image == null){
             setError("L'image ne peut pas être vide")
             setIsLoading(false)
@@ -126,6 +129,19 @@ export const CreateRecipeForm = ({userDetail}:{userDetail:UserResponse}) => {
                                 <option value="02:00:00">02:00:00</option>
                             </select>
                             <p>Vous devez sélectionner une durée</p>
+                        </div>
+
+                        {/* Portion */}
+                        <div className="space-y-2">
+                            <Label htmlFor="portion">Pour combien de personnes</Label>
+                            <Input
+                            id="name"
+                            type="number"
+                            value={formData.portion}
+                            onChange={(e) => handleInputChange("portion", e.target.value)}
+                            required
+                            />
+                            <p>Le nombre de personnes doit être supérieur à 0</p>
                         </div>
 
                         {/* Image */}
