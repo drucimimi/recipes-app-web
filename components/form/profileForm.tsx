@@ -47,6 +47,7 @@ export const ProfileForm = ({pseudo, avatar, userDetail}:CookiesProfileAndSessio
     const [success, setSuccess] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
+    let fileInput: HTMLInputElement | null = null
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null
         setFormData((prev) => ({...prev, "avatar":file}))
@@ -144,7 +145,11 @@ export const ProfileForm = ({pseudo, avatar, userDetail}:CookiesProfileAndSessio
                             Enregistrer
                         </Button>
                     </form>
+
+                    {/* Change Password ButtonLink */}
                     <ButtonLink source={"/web/protected/resetPassword"} name={"Changer le mot de passe"} action={"Changer"} icon={iconReverseResetPass} iconReverse={iconResetPass} iconDescription={"Logo réinitialisation"}></ButtonLink>
+                    
+                    {/* Delete Account Button and Dialog */}
                     <CustomDialog
                         trigger={<Button variant="destructive" style={{backgroundColor:"#830B0B", color: "FFFFFF"}}>Supprimer le compte</Button>}
                         title="Suppression du compte"

@@ -45,7 +45,7 @@ const HomeWeb = async ({searchParams}:PageProps) => {
     } catch (error) {
         console.error("Erreur lors du chargement des données:", error)
     }
-    filteredRecipes = searchTerm?.trim() ? recipes.filter((recipe) => recipe.name.toLowerCase().includes(searchTerm.toLowerCase())) : recipes
+    filteredRecipes = searchTerm?.trim() ? recipes.filter((recipe) => recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) || recipe.author.toLowerCase().includes(searchTerm.toLowerCase())) : recipes
     return (
         <>
             <Header icon={logo} iconReverse={logoReverse} iconDescription={"Logo Recipes App"} title={"Recipes App"} hasMenu={true} role={userDetail?.roleName ?? ""} userInfo={userDetail} />
