@@ -4,7 +4,7 @@ import Header from "@/components/header"
 import ButtonLink from "../components/ui/buttonLink"
 import iconAPK from '@/public/images/light/MaterialSymbolsAndroid.svg'
 import iconAPKReverse from '@/public/images/dark/MaterialSymbolsAndroid.svg'
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import init from "@socialgouv/matomo-next"
 import logo from '@/public/images/light/logo.svg'
 import logoReverse from '@/public/images/dark/logo.svg'
@@ -15,8 +15,21 @@ import iconWebReverse from '@/public/images/dark/MdiWeb.svg'
 const Home = () => {
     const MATOMO_URL = process.env.MATOMO_URL || "https://matomo.webapps24.eu"
     const MATOMO_SITE_ID = process.env.MATOMO_SITE_ID || "1"
+
+    let [version, setVersion] = useState("0.0.0")
+    const getLastVersionAPK = async () => {
+      const response = await fetch('/api/apk-version')
+      if(response.status == 200){
+        const data = await response.json()
+        setVersion(data["version"])
+      } else {
+        console.error("Impossible de récupérer la dernière version APK de l'application")
+      }
+    }
+
     useEffect(() => {
       init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID })
+      getLastVersionAPK()
     }, [])
 
     return (
@@ -30,7 +43,7 @@ const Home = () => {
            Téléchargez notre application mobile dès maintenant ou voir la version web ci-dessous !
         </p>
         <div className="flex flex-col lg:flex-row gap-2">
-          <ButtonLink source='/download/apk/recipes-app-2025.2.2.apk' name="Télécharger l'application Android" action='Télécharger' icon={iconAPK} iconReverse={iconAPKReverse} iconDescription='Icone Android' />
+          <ButtonLink source={`/download/apk/recipes-app-${version}.apk`} name="Télécharger l'application Android" action='Télécharger' icon={iconAPK} iconReverse={iconAPKReverse} iconDescription='Icone Android' />
         </div>
         <div className="flex flex-col lg:flex-row gap-2">
           <ButtonLink source='/web' name="Voir la version web" action='Voir' icon={iconWeb} iconReverse={iconWebReverse} iconDescription='Icone Web' />
