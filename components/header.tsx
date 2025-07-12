@@ -8,6 +8,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { deleteSessionCookie } from '@/services/authProvider'
 import { UserResponse } from '@/types/definitions'
 import { deleteCookie } from 'cookies-next'
+import Image from 'next/image'
 
 interface HeaderProps {
   icon:string,
@@ -49,6 +50,7 @@ interface HeaderProps {
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
   const router = useRouter()
   const pathname = usePathname()
+  const avatar = props.userInfo?.profile.avatar || `http://localhost:8080/api/images/default/default-profile-image.jpg`
   const logout = async () => {
     const response = await fetch('/api/logout')
     if(response.status == 200){
@@ -71,12 +73,15 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
       <h1>{props.title}</h1>
     </Link>
     { props.hasMenu && <div>
-      <ul className='flex flex-col md:flex-row gap-2 justify-center items-center'>
+      <ul className='flex flex-col md:flex-row gap-2 justify-center md:justify-around items-center'>
         <li>
           <Link href="/web">Accueil</Link>
         </li>
         {props.role == "ADMIN" || props.role == "USER" ? <li>
-          <Link href="/web/protected/profile">Mon Profil</Link>
+          <Link href="/web/protected/profile" style={{display: "flex", gap:"0.3em"}}>
+            <Image src={avatar} width={24} height={24} alt="avatar" />
+            Mon Profil
+          </Link>
         </li> : <li>
           <Link href="/web/login">Connexion</Link>
         </li>}
