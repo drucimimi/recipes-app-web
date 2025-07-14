@@ -50,7 +50,7 @@ interface HeaderProps {
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
   const router = useRouter()
   const pathname = usePathname()
-  const avatar = props.userInfo?.profile.avatar || `http://localhost:8080/api/images/default/default-profile-image.jpg`
+  const avatar = props.userInfo?.profile.avatar.replace("10.0.2.2", "localhost") || `http://localhost:8080/api/images/default/default-profile-image.jpg`
   const logout = async () => {
     const response = await fetch('/api/logout')
     if(response.status == 200){

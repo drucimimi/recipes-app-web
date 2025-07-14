@@ -117,7 +117,7 @@ export const ProfileForm = ({pseudo, avatar, userDetail}:CookiesProfileAndSessio
                         {/* Avatar */}
                         <div className="space-y-2">
                             <Label htmlFor="avatar">Avatar</Label>
-                            <Image src={!newAvatar.includes("default") ? newAvatar : userDetail?.profile.avatar} alt={"avatar"} width={200} height={200}/>
+                            <Image src={!newAvatar.includes("default") ? newAvatar : userDetail?.profile.avatar.replace("10.0.2.2", "localhost")} alt={"avatar"} width={200} height={200}/>
                             <div className="flex items-center gap-2">
                             <Input id="avatar" type="file" onChange={handleFileChange} className="cursor-pointer" />
                             <Upload className="h-4 w-4 text-muted-foreground" />

@@ -1,7 +1,7 @@
 import { DecodeUserResponse, UserResponse } from '@/types/definitions';
 import { JWTPayload, jwtVerify, SignJWT } from 'jose'
 
-const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+const secret = Buffer.from(process.env.JWT_SECRET!, 'base64')
 
 /**
  * 
@@ -11,14 +11,14 @@ const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 export async function encrypt(payload: JWTPayload) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
-    .setExpirationTime('1d')
+    .setExpirationTime('100y')
     .sign(secret)
 }
 
 /**
  * 
  * @param token
- * @description permet de déchiffer une information avec un token JWT
+ * @description permet de déchiffer une information avec un token JWT et rafraichir le token si besoin
  */
 export async function decrypt(token: string) {
   try {

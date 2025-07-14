@@ -9,13 +9,11 @@ import { UserResponse } from '@/types/definitions'
  * @description permet de créer la session utilisateur
  */
 export async function createSession(userDetail: UserResponse) {
-  const expiresAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)
-  const session = await encrypt({ userDetail, expiresAt })
+  const session = await encrypt({ userDetail })
   const cookieStore = await cookies()
   cookieStore.set('session', session, {
     httpOnly: true,
     secure: true,
-    expires: expiresAt,
     sameSite: 'lax',
     path: '/',
   })
