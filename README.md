@@ -45,9 +45,9 @@ Pour lancer le projet en local, lancer la commande `bun run dev`
 
 ## Versions
 
-Dernière version stable : 2025.2.7
+Dernière version stable : 2025.2.8
 
-Dernière version : 2025.2.7
+Dernière version : 2025.2.8
 
 Liste des versions : [Cliquer pour afficher](https://github.com/drucimimi/recipes-app/tags)
 
