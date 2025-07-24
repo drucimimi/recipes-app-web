@@ -2,6 +2,7 @@
 import { cookies } from 'next/headers'
 import { encrypt } from './hashData'
 import { UserResponse } from '@/types/definitions'
+import { apiRequest } from './httpCall'
 
 /**
  * 
@@ -25,4 +26,14 @@ export async function createSession(userDetail: UserResponse) {
  */
 export async function deleteSessionCookie() {
   (await cookies()).delete('session')
+}
+
+export async function refreshToken(token: string) {
+  const response = await apiRequest('/auth/refresh', {method: 'POST', headers:{'Content-Type':'application/json'}, body:{"token":token}})
+  if(response.status == 201){
+    const data = await response.json()
+    createSession(data)
+    return data["token"]
+  }
+  return null
 }

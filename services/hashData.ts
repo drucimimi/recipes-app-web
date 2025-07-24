@@ -1,5 +1,6 @@
 import { DecodeUserResponse, UserResponse } from '@/types/definitions';
 import { JWTPayload, jwtVerify, SignJWT } from 'jose'
+import { refreshToken } from './authProvider';
 
 const secret = Buffer.from(process.env.JWT_SECRET!, 'base64')
 
@@ -22,7 +23,8 @@ export async function encrypt(payload: JWTPayload) {
  */
 export async function decrypt(token: string) {
   try {
-    const { payload } = await jwtVerify(token, secret)
+    let tokenToCheck = await refreshToken(token) ?? token;
+    const { payload } = await jwtVerify(tokenToCheck, secret)
     return payload as DecodeUserResponse
   } catch(error) {
     console.error(error)
