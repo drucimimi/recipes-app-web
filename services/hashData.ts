@@ -23,8 +23,7 @@ export async function encrypt(payload: JWTPayload) {
  */
 export async function decrypt(token: string) {
   try {
-    let tokenToCheck = await refreshToken(token) ?? token;
-    const { payload } = await jwtVerify(tokenToCheck, secret)
+    const { payload } = await jwtVerify(token, secret)
     return payload as DecodeUserResponse
   } catch(error) {
     console.error(error)

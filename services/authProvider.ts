@@ -33,7 +33,5 @@ export async function refreshToken(token: string) {
   if(response.status == 201){
     const data = await response.json()
     createSession(data)
-    return data["token"]
   }
-  return null
 }
